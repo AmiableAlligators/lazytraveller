@@ -6,7 +6,7 @@
 
   - Christine Dey
   - Winston Ku
-  - teamMember
+  - Yi Li
   - teamMember
 
 ## Table of Contents
