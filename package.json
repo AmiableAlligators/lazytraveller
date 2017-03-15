@@ -2,12 +2,14 @@
   "name": "lazytraveller",
   "version": "1.0.0",
   "description": "",
-  "author": "Christine Dey",
+  "author": "Christine Dey & company",
   "license": "",
   "engines": {
     "node": ">=6.4.0"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "node server/server.js"
+  },
   "dependencies": {
     "express": "^4.15.2"
   },
