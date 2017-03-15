@@ -1,6 +1,6 @@
 # Lazy Traveller
 
-> Pithy project description
+> 
 
 ## Team
 
