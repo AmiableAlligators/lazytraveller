@@ -4,7 +4,7 @@
 
 ## Team
 
-  - teamMember
+  - Christine Dey
   - teamMember
   - teamMember
   - teamMember
