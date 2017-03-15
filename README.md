@@ -5,7 +5,7 @@
 ## Team
 
   - Christine Dey
-  - teamMember
+  - Winston Ku
   - teamMember
   - teamMember
 
