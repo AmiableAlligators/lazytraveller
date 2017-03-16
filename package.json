@@ -1,18 +1,24 @@
 {
-  "name": "lazytraveller",
+  "name": "react-hello-world",
   "version": "1.0.0",
   "description": "",
-  "author": "Christine Dey & company",
-  "license": "",
-  "engines": {
-    "node": ">=6.4.0"
-  },
+  "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "mocha"
+    "dev": "webpack -d --watch",
+    "build": "webpack -p"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^2.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
