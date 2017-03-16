@@ -6,8 +6,8 @@
 
   - Christine Dey
   - Winston Ku
-  - teamMember
-  - teamMember
+  - Yi Li (Jaycee)
+  - Terence Tham
 
 ## Table of Contents
 
