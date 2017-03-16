@@ -10,7 +10,7 @@ export default class AppRouter extends React.Component {
 
 	render () {
 		return (
-			<Router>
+			<Router history={browserHistory}>
 				<Route path="/" component={Layout}>
 					<IndexRoute component={SearchView} />
 				</Route>
