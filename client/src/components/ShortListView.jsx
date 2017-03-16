@@ -1,7 +1,7 @@
 import React from 'react';
 import ActivityView from './ActivityView.jsx'
 
-class ShortListView extends React.Component {
+export default class ShortListView extends React.Component {
   constructor(props) {
     super(props)
 
@@ -12,10 +12,8 @@ class ShortListView extends React.Component {
 
   decide(activityId, isLike) {
     var end = this.state.current ? false : true;
-
     // Need to build a service founction somewhere, then:
     // POST activityId & isLike & end to server
-
   }
 
   render() {
@@ -23,11 +21,8 @@ class ShortListView extends React.Component {
       <div>
         <ActivityView
           activity={ this.state.current }
-          handleLikeClick={ this.decide.bind(this) }
-          />
+          handleLikeClick={ this.decide.bind(this) } />
       </div>
     )
   }
 }
-
-export default ShortListView;

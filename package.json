@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/server.js & webpack -d --watch",
     "test": "mocha",
     "dev": "webpack -d --watch",
     "build": "webpack -p"
