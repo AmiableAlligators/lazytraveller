@@ -9,12 +9,16 @@ export default class AppRouter extends React.Component {
 	}
 
 	render () {
-		return (
-			<Router history={browserHistory}>
-				<Route path="/" component={Layout}>
-					<IndexRoute component={SearchView} />
+    return (
+			<Router history={ browserHistory }>
+				<Route path="/" component={ Layout }>
+					<IndexRoute component={ SearchView } />
 				</Route>
 			</Router>
-		);
-	}
+    );
+  }
 }
+    // <div>
+    //   <Layout />
+    //   <SearchView />
+    // </div>

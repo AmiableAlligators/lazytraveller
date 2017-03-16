@@ -1,8 +1,8 @@
 import React from 'react';
 
 const FilterListEntry = (props) => (
-  <div class="FilterListEntry">
-      <div class="ui checkbox">
+  <div className="FilterListEntry">
+      <div className="ui checkbox">
         <input type="checkbox" name="Filter"></input>
         <label>label</label>
       </div>
