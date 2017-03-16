@@ -10,6 +10,7 @@ export default class SearchView extends React.Component {
 	render () {
 		return (
 			<div className="appNav">
+      <h1>Lazy Traveller</h1>
 				<div>
 					<SearchBar />
 				</div>
