@@ -1,16 +1,19 @@
 const citygrid = require('./api/citygrid');
+// const yelplibrary = require('./api/yelplibrary');
 
-// const AppService = {
-//   fetch: function(query, callback) {
-//     citygrid.fetch(query, function(err, data) {
-//       if (err) {
-//         callback(err, null);
-//       } else {
-//         callback(null, data);
-//       }
-//     })
-//   }
-// };
+let libs = [
+  citygrid
+  // yelplibrary
+];
 
+const AppService = {
+  find: function(queryObject) {
+    lib.map(func => {
+      func.fetch(queryObject);
+    });
+
+    return Promise.all(lib);
+  },
+};
 
 module.exports = AppService;
