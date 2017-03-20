@@ -1,7 +1,10 @@
 import React from 'react';
-import { Router, browserHistory, IndexRoute, Route } from 'react-router';
+import { Router, IndexRoute, Route } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 import Layout from './Layout.jsx';
 import SearchView from './SearchView.jsx';
+
+const history = createHistory();
 
 export default class AppRouter extends React.Component {
 	constructor(props) {
@@ -10,15 +13,13 @@ export default class AppRouter extends React.Component {
 
 	render () {
     return (
-			<Router history={ browserHistory }>
-				<Route path="/" component={ Layout }>
-					<IndexRoute component={ SearchView } />
+			<Router history={ history }>
+				<Route exact path="/" component={ Layout }>
 				</Route>
 			</Router>
     );
   }
 }
-    // <div>
-    //   <Layout />
-    //   <SearchView />
-    // </div>
+
+				// <IndexRoute component={ SearchView } />
+
