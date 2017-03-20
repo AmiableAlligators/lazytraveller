@@ -8,11 +8,11 @@ let libs = [
 
 const AppService = {
   find: function(queryObject) {
-    lib.map(func => {
-      func.fetch(queryObject);
+    let fetches = libs.map(func => {
+      return func.fetch(queryObject);
     });
 
-    return Promise.all(lib);
+    return Promise.all(fetches);
   },
 };
 

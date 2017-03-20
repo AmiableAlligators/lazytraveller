@@ -3,6 +3,7 @@ const express = require('express');
 
 const app = express();
 const bodyParser = require('body-parser');
+const AppService = require('./AppService.js')
 const data = require('./../data/sampleData');
 
 var port = process.env.PORT || 3000;
@@ -12,7 +13,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/query', function(req, res) {
-  // let {query, where, type} = req.body;
 
   // AppService.find(req.body.where)
     // .then(data => {
