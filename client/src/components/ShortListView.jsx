@@ -2,12 +2,12 @@ import React from 'react';
 import ActivityView from './ActivityView.jsx'
 import Data from '../../../data/sampleData.js'
 
-export default class ShortListView extends React.Component {
+export default class ShortlistView extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      current: Data.results.locations.shift(),
+      current: Data.results.locations.shift()
     };
 
     this.handleClick = this.handleClick.bind(this);
