@@ -19,7 +19,7 @@ export default class ShortListView extends React.Component {
     // POST activityId & isLike & end to server
   }
 
-  
+
 
   render() {
     return (
