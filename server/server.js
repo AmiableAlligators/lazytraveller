@@ -12,11 +12,13 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/query', function(req, res) {
-  // AppService.fetch(req.body)
-    // .then(function(data) {
+  // let {query, where, type} = req.body;
+
+  // AppService.find(req.body.where)
+    // .then(data => {
     //   res.json(data);
     // })
-    // .error(function(error) {
+    // .catch(error => {
     //   res.send(error);
     // })
   res.json(data);
