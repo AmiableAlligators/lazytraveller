@@ -13,15 +13,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/query', function(req, res) {
-
-  // AppService.find(req.body.where)
-    // .then(data => {
-    //   res.json(data);
-    // })
-    // .catch(error => {
-    //   res.send(error);
-    // })
-  res.json(data);
+  AppService.find(req.body.where)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.send(error);
+    })
+  // res.json(data);
 });
 
 // ««««««««« start app  »»»»»»»»»
