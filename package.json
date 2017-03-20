@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack -d --watch",
-    "test": "mocha",
+    "test": "webpack -d --config webpack.config-test.js && mocha test/output.js",
     "dev": "webpack -d --watch & nodemon server/server.js",
     "build": "webpack -p"
   },

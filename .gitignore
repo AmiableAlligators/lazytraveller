@@ -34,6 +34,7 @@ build/
 dist/
 client/public/bundle.js
 .tmp/
+test/output.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
