@@ -9,24 +9,25 @@ export default class Layout extends React.Component {
 		super(props);
     this.state = {
       results: null,
-      Searching: false,
-      ShortListing: true,
+      Searching: true,
+      ShortListing: false,
       Lazying: false,
     }
 	}
 
-  fetch() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          results: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+  fetch(query, filters) {
+    console.log('fetching', query, filters);
+    // $.ajax({
+    //   url: '/items', 
+    //   success: (data) => {
+    //     this.setState({
+    //       results: data
+    //     })
+    //   },
+    //   error: (err) => {
+    //     console.log('err', err);
+    //   }
+    // });
   }
 
   shortListing(input) {
@@ -57,7 +58,7 @@ export default class Layout extends React.Component {
       if (this.state.Searching) {
         return (
           <div className="container">
-            <SearchView />
+            <SearchView sendHandler={ this.fetch }/>
           </div>
         );
       } else if (this.state.ShortListing) {

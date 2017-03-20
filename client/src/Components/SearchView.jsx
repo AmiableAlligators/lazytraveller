@@ -3,21 +3,37 @@ import SearchBar from './SearchBar.jsx'
 import FilterList from './FilterList.jsx'
 
 export default class SearchView extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      filters: {},
+      query: null,
+    }
+    this.submitHandler = this.submitHandler.bind(this);
+    this.stateHandler = this.stateHandler.bind(this);
+  }
 
-	render () {
-		return (
-			<div className="appNav">
+  submitHandler() {
+    this.props.sendHandler(this.state.query, this.state.filters);
+  }
+
+  stateHandler(stateObj) {
+    this.setState(stateObj);
+  }
+
+
+  render () {
+    
+    return (
+      <div className="appNav">
         <h1>Lazy Traveller</h1>
-				<div>
-					<SearchBar />
-				</div>
-				<div>
-					<FilterList />
-				</div>
-			</div>
-		);
-	}
+        <div>
+          <SearchBar stateHandler={ this.stateHandler } submitHandler={ this.submitHandler }/>
+        </div>
+        <div>
+          <FilterList />
+        </div>
+      </div>
+    );
+  }
 }

@@ -1,12 +1,39 @@
 import React from 'react';
 
-const SearchBar = (props) => (
-  <div className="SearchBar">
-      <form action="#" id="send" method="post">
-        <input type="text" name="query" id="query"/>
-        <input type="submit" name="submit" className="submit"/>
-      </form>
-  </div>
-)
+export default class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchQuery: '',
+    }
+    this.submission = this.submission.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    
+  }
 
-export default SearchBar;
+  submission () {
+    this.props.submitHandler();
+  }
+
+  handleChange(event) {
+    this.setState({
+      searchQuery: event.target.value,
+    });
+
+    this.props.stateHandler({ query: event.target.value });
+  }
+
+  render () {
+    
+    return (
+      <div className="SearchBar">
+        <input type="text" name="searchQuery"
+        value={this.state.searchQuery} onChange = { this.handleChange }/>
+        <button 
+        name="submit" className="submit" 
+        onClick = { this.submission }>
+        submit</button>
+      </div>
+    );
+  }
+}
