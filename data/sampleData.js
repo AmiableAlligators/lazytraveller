@@ -1,4 +1,4 @@
-{
+module.exports = {
   "results": {
     "uri": "http://api.citygridmedia.com//search/real/where?type=attractions&where=sanfrancisco,CA&what=places%20to%20visit&sort=highestrated&format=json&publisher=test",
     "first_hit": 1,

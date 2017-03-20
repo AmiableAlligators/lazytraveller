@@ -1,21 +1,30 @@
 import React from 'react';
 
-const ActivityView = ({ activity }) => {
-  <div class="activity-container">
-    <div class="activity-title">{ activity.title }</div>
-    <div class="activity-img">
-      <img src={ activity.url } alt="" />
+const ActivityView = ({ activity, handleLikeClick }) => (
+  <div className="activity-container">
+    <div className="activity-title">{ activity.name }</div>
+    <div className="activity-img">
+      <img src={ activity.image } alt="" />
     </div>
-    <div class="activity-des">{ activity.description }</div>
-    <div class="activity-dist">{ activity.dist }</div>
-    <div class="activity-price">{ activity.price }</div>
-    <button class="like"
-      onClick={ () => handleLikeClick( true, activity.activityId ) }>Like
+    <div className="activity-des">{ activity.description }</div>
+    <div className="activity-dist">{ activity.dist }</div>
+    <div className="activity-price">{ activity.price }</div>
+    <button className="like"
+      onClick={ () => { handleClick( true, activity.id ) } }>Like
     </button>
-    <button class="dis-like"
-      onClick={ () => handleLikeClick( false, activity.activityId ) }>Dislike
+    <button className="dislike"
+      onClick={ () => { handleClick( false, activity.id ) } }>Dislike
     </button>
   </div>
-};
+);
 
 export default ActivityView;
+// class ActivityView extends React.Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+      
+//     }
+//   }
+// }
