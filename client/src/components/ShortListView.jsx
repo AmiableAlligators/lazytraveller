@@ -6,11 +6,11 @@ export default class ShortListView extends React.Component {
     super(props)
 
     this.state = {
-      current = this.props.shortList.shift();
+      current: this.props.shortList.shift(),
     };
   }
 
-  decide(activityId, isLike) {
+  decide(isLike, activityId) {
     var end = this.state.current ? false : true;
     // Need to build a service founction somewhere, then:
     // POST activityId & isLike & end to server

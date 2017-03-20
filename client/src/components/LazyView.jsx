@@ -26,13 +26,13 @@ export default class LazyView extends React.Component {
       <div>
         <h2>Price</h2>
         <LazyList 
-          lazyData={ this.filterData('Price') } />
+          data={ this.filterData('Price') } />
         <h2>Distance</h2>
         <LazyList 
-          lazyData={ this.filterData('Distance') } />
+          data={ this.filterData('Distance') } />
         <h2>Time</h2>
         <LazyList 
-          lazyData={ this.filterData('Time') } />
+          data={ this.filterData('Time') } />
       </div>
     )
   }
