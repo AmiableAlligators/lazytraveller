@@ -10,8 +10,8 @@ export default class Layout extends React.Component {
     this.state = {
       results: null,
       Searching: false,
-      ShortListing: false,
-      Lazying: true,
+      ShortListing: true,
+      Lazying: false,
     }
 	}
 
@@ -22,6 +22,19 @@ export default class Layout extends React.Component {
         this.setState({
           results: data
         })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
+  shortListing(input) {
+    $.ajax({
+      url: 'http://localhost:3000/shortlist', 
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      success: (data) => {
       },
       error: (err) => {
         console.log('err', err);
@@ -50,7 +63,7 @@ export default class Layout extends React.Component {
       } else if (this.state.ShortListing) {
         return (
           <div className="container">
-            <ShortListView />
+            <ShortListView shortListing={ this.shortListing } />
           </div>
         );
       } else if (this.state.Lazying) {
