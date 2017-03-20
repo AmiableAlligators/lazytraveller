@@ -1,32 +1,27 @@
 var webpack = require('webpack');
 var path = require('path');
-
-<<<<<<< HEAD
-var BUILD_DIR = path.resolve(__dirname, 'client/public');
-=======
-var BUILD_DIR = path.resolve(__dirname, 'client/src/public');
->>>>>>> react components should load given browser data. package.json and webpack working
-var APP_DIR = path.resolve(__dirname, 'client/src');
+var SRC_DIR = path.join(__dirname, '/client/src');
+var DIST_DIR = path.join(__dirname, '/client/public');
 
 var config = {
-  entry: APP_DIR + '/index.jsx',
+  entry: `${SRC_DIR}/index.jsx`,
   output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    path: DIST_DIR,
   },
    module : {
     loaders : [
       {
         test : /\.jsx?/,
-        include : APP_DIR,
-        loader : 'babel-loader',
-        query : {
+        include: SRC_DIR,
+        exclude: '/node_modules/',
+        loader: 'babel-loader',
+        query: {
           presets: ['react', 'es2015']
-       }
+        }
       }
     ]
-  },
-  devtool: 'eval'
+  }
 };
 
 module.exports = config;
