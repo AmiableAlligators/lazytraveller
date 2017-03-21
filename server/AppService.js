@@ -1,16 +1,16 @@
 const citygrid = require('./api/citygrid');
-// const yelplibrary = require('./api/yelplibrary');
+const yelp = require('./api/yelp');
 
 let apis = [
-  citygrid
-  // yelplibrary
+  citygrid,
+  yelp
 ];
 
 /**
- * @queryWithFilters is an Object with structure: 
+ * @queryWithFilters is an Object with structure:
  * {
  *   query: String, what the user is searching for,
- *   filters: Array, of filter-ids   
+ *   filters: Array, of filter-ids
  * }
  */
 const AppService = {
