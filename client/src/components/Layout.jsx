@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import SearchView from './SearchView.jsx';
-import ShortListView from './ShortListView.jsx';
+import ShortlistView from './ShortlistView.jsx';
 import LazyView from './LazyView.jsx';
 
 export default class Layout extends React.Component {
@@ -52,7 +52,7 @@ export default class Layout extends React.Component {
     return (
       <div className="container">
         <SearchView sendHandler={ this.fetch } />
-        <ShortListView data={ this.state.results } />
+        <ShortlistView data={ this.state.results } />
       </div>
     );
   }
