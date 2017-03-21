@@ -5,6 +5,18 @@ import FilterList from './FilterList.jsx'
 export default class SearchView extends React.Component {
   constructor(props) {
     super(props);
+
+    this.tmp = [
+      {
+        id: 1,
+        name: 'City Activities'
+      },
+      {
+        id: 2,
+        name: 'Outdoor Activities'
+      }
+    ];
+
     this.state = {
       filters: {},
       query: null,
@@ -23,15 +35,15 @@ export default class SearchView extends React.Component {
 
 
   render () {
-    
     return (
       <div className="appNav">
         <h1>Lazy Traveller</h1>
         <div>
-          <SearchBar stateHandler={ this.stateHandler } submitHandler={ this.submitHandler }/>
+          <SearchBar stateHandler={ this.stateHandler } 
+            submitHandler={ this.submitHandler } />
         </div>
         <div>
-          <FilterList />
+          <FilterList filters={this.tmp} />
         </div>
       </div>
     );

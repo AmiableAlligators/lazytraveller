@@ -8,7 +8,6 @@ export default class SearchBar extends React.Component {
     }
     this.submission = this.submission.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    
   }
 
   submission () {
@@ -24,14 +23,15 @@ export default class SearchBar extends React.Component {
   }
 
   render () {
-    
     return (
       <div className="SearchBar">
-        <input type="text" name="searchQuery"
-        value={this.state.searchQuery} onChange = { this.handleChange }/>
-        <button 
-        name="submit" className="submit" 
-        onClick = { this.submission }>
+        <input type="text" 
+          name="searchQuery"
+          value={ this.state.searchQuery } 
+          onChange={ this.handleChange } />
+        <button name="submit" 
+          className="submit" 
+          onClick={ this.submission }>
         submit</button>
       </div>
     );
