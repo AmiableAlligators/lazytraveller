@@ -27,7 +27,6 @@ export default class SearchBar extends React.Component {
     
     return (
       <div className="SearchBar">
-        <h2>Search</h2>
         <input type="text" name="searchQuery"
         value={this.state.searchQuery} onChange = { this.handleChange }/>
         <button 
