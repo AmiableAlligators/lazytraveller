@@ -5,7 +5,7 @@ module.exports = {
   fetch: function(queryWithFilters) {
     var search = {
       where: queryWithFilters.query.split(' ').join('%20'),
-      type: 'travel',
+      type: 'attractions',
       sort: 'highestrated'
     };
 
