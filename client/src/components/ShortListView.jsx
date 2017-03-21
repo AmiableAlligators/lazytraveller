@@ -19,8 +19,6 @@ export default class ShortListView extends React.Component {
     // POST activityId & isLike & end to server
   }
 
-
-
   render() {
     return (
       <div>
@@ -29,6 +27,7 @@ export default class ShortListView extends React.Component {
           this.props.data &&
           this.props.data.map(item => (
             <ActivityView
+              key= { item.id }
               activity={ item }
               handleClick={ this.handleClick } />
           ))
