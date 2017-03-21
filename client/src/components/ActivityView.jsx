@@ -1,30 +1,29 @@
 import React from 'react';
 
 const ActivityView = ({ activity, handleLikeClick }) => (
-  <div className="activity-container">
-    <div className="activity-title">{ activity.name }</div>
-    <div className="activity-img">
-      <img src={ activity.image } alt="" />
+  <div className="ui card">
+    <div className="image">
+      <img src={ activity.image } />
     </div>
-    <div className="activity-des">{ activity.description }</div>
-    <div className="activity-dist">{ activity.dist }</div>
-    <div className="activity-price">{ activity.price }</div>
-    <button className="like"
-      onClick={ () => { handleClick( true, activity.id ) } }>Like
-    </button>
-    <button className="dislike"
-      onClick={ () => { handleClick( false, activity.id ) } }>Dislike
-    </button>
+    <div className="content">
+      <a className="header">{ activity.name }</a>
+      <div className="meta">
+        <span className="">Rating: { activity.rating }</span>
+        <span className="">{ activity.price }</span>
+      </div>
+      <div className="description">
+        { activity.description }
+      </div>
+    </div>
+    <div className="extra content">
+      <div className="ui two buttons">
+        <div className="ui basic red button"
+          onClick={ () => { handleClick( false, activity.id ) } }>Dislike</div>
+        <div className="ui basic green button"
+          onClick={ () => { handleClick( true, activity.id ) } }>Shortlist</div>
+      </div>
+    </div>
   </div>
 );
 
 export default ActivityView;
-// class ActivityView extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-      
-//     }
-//   }
-// }
