@@ -24,9 +24,15 @@ export default class ShortListView extends React.Component {
   render() {
     return (
       <div>
-        <ActivityView
-          activity={ this.state.current }
-          handleClick={ this.handleClick } />
+        <h1>ShortList</h1>
+        {
+          this.props.data &&
+          this.props.data.map(item => (
+            <ActivityView
+              activity={ item }
+              handleClick={ this.handleClick } />
+          ))
+        }
       </div>
     )
   }
