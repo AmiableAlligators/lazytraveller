@@ -4,27 +4,25 @@ export default class FilterListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkBoxState: false,
+      checked: false
     }
-    this.onEventCheck = this.onEventCheck.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  onEventCheck (callback) {
-
-    // need to create an obj to pass into the callback.
-    
-    this.setState({ checkBoxState: this.checkBoxState });
-    callback()
+  handleClick(event) {
+    this.setState({ checked: event.target.checked });
   }  
 
-  render () {
+  render() {
     return (
-     <div className="FilterListEntry">
-         <div className="ui checkbox">
-           <input type="checkbox" name="Filter"></input>
-           <label>label</label>
-         </div>
-     </div>
+      <label>
+        <input type="checkbox" 
+          name={this.props.filter.id} 
+          value={this.props.filter.id}
+          checked={this.state.checked}
+          onClick={this.handleClick} />
+          {this.props.filter.name}
+      </label>
     );
   }
 }
