@@ -9,18 +9,17 @@ const data = require('./../data/sampleData');
 var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
 app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/query', function(req, res) {
-  AppService.find(req.body.where)
+	let queryWithFilters = req.body;
+  AppService.find(queryWithFilters)
     .then(data => {
       res.json(data);
     })
     .catch(error => {
       res.send(error);
     })
-  // res.json(data);
 });
 
 // ««««««««« start app  »»»»»»»»»
