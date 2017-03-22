@@ -30,43 +30,28 @@ let formatData = apiResult => {
   for (let i = 0; i < locations.length; i++) {
     let currentLocation = locations[i];
     let currentSubResult = {
-      name: '',
+      name: currentLocation.name,
       address: {
-        street: '',
-        city: '',
-        state: '',
-        postal_code: ''
+        street: currentLocation.address.street,
+        city: currentLocation.address.city,
+        state: currentLocation.address.state,
+        postal_code: currentLocation.address.postal_code
       },
-      image: '',
+      image: currentLocation.image,
       location: {
-        longitude: '',
-        latitude: ''
+        longitude: currentLocation.longitude,
+        latitude: currentLocation.latitude
       },
-      phone_number: '',
-      rating: null,
-      neighborhood: '',
+      phone_number: currentLocation.phone_number,
+      rating: currentLocation.rating,
+      neighborhood: currentLocation.neighborhood,
       isClosed: null,
       api_reference: {
-        api_name: '',
-        api_id: ''
+        'citygrid': {
+          reference_id: currentLocation.id
+        }  
       }
     };
-
-    currentSubResult.name = currentLocation.name;
-    currentSubResult.address.street = currentLocation.address.street;
-    currentSubResult.address.city = currentLocation.address.city;
-    currentSubResult.address.state = currentLocation.address.state;
-    currentSubResult.address.postal_code = currentLocation.address.postal_code;
-    currentSubResult.image = currentLocation.image;
-    currentSubResult.location.longitude = currentLocation.longitude;
-    currentSubResult.location.latitude = currentLocation.latitude;
-    currentSubResult.phone_number = currentLocation.phone_number;
-    currentSubResult.rating = currentLocation.rating;
-    currentSubResult.neighborhood = currentLocation.neighborhood;
-    currentSubResult.isClosed = null;
-    currentSubResult.api_reference.api_name = 'citygrid';
-    currentSubResult.api_reference.api_id =currentLocation.id;
-
     results.push(currentSubResult);
   }
 
