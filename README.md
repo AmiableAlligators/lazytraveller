@@ -18,6 +18,7 @@
     1. [Tasks](#tasks)
 1. [Roadmap](#roadmap)
 1. [Contributing](#contributing)
+1. [Testing](#testing)
 
 ## Usage
 
@@ -51,3 +52,7 @@ View the project roadmap [here](LINK_TO_DOC)
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## Testing
+
+See [TESTING.md](TESTING.md) for an overview of how and what to test.
