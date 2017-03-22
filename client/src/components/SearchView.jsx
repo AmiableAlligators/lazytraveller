@@ -18,7 +18,7 @@ export default class SearchView extends React.Component {
     ];
 
     this.state = {
-      filters: {},
+      filters: [],
       query: null,
     }
     this.submitHandler = this.submitHandler.bind(this);
