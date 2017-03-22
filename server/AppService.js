@@ -10,7 +10,7 @@ let formatData = apiResults => {
 
   let subResult = {
     name: '',
-    adderss: {
+    address: {
       street: '',
       city: '',
       state: '',
@@ -35,7 +35,6 @@ let formatData = apiResults => {
 
   for (let i = 0; i < apiResults.length; i++) {
     let currentApiResult = JSON.parse(apiResults[i]);
-    console.log('this is the current currentApiResult', currentApiResult);
     let locations = currentApiResult.results.locations;
 
     for (let k = 0; k < locations.length; k++) {
@@ -43,10 +42,10 @@ let formatData = apiResults => {
       let currentSubResult = subResult;
 
       currentSubResult.name = currentLocation.name;
-      currentSubResult.adderss.street = currentLocation.adderss.street;
-      currentSubResult.adderss.city = currentLocation.adderss.city;
-      currentSubResult.adderss.state = currentLocation.adderss.state;
-      currentSubResult.adderss.postal_code = currentLocation.adderss.postal_code;
+      currentSubResult.address.street = currentLocation.address.street;
+      currentSubResult.address.city = currentLocation.address.city;
+      currentSubResult.address.state = currentLocation.address.state;
+      currentSubResult.address.postal_code = currentLocation.address.postal_code;
       currentSubResult.image = currentLocation.image;
       currentSubResult.location.longitude = currentLocation.longitude;
       currentSubResult.location.latitude = currentLocation.latitude;
@@ -77,17 +76,13 @@ const AppService = {
       return func.fetch(queryWithFilters);
     });
 
-    Promise.all(fetches)
+    return Promise.all(fetches)
     .then(apiResults => {
       return new Promise((resolve, reject) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-        } else {
-          resolve(formatData(apiResults));
-        }
+        resolve(formatData(apiResults));
       });
-    });
+    })
+    .catch(error => console.error(error));
   }
 };
 
