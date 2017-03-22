@@ -26,7 +26,7 @@ export default class Layout extends React.Component {
       dataType: 'json',
       success: function(data) {
         this.setState({
-          results: JSON.parse(data)['results']['locations']
+          results: data
         })
       }.bind(this),
       error: function(err) {
