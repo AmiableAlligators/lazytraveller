@@ -118,9 +118,9 @@ it('should have props for email and src', function () {
 });
 
 it('renders items', () => {        
-  const props = {items: { id: 1', title: 'foo'}}  
-  const list = shallow(<Release {...props} />);    
-  expect(list.find('.item').length).toBe(1);    
+  const props = {items: { id: 1', title: 'foo'}};
+  const list = shallow(<Release {...props} />);
+  expect(list.find('.item').length).toBe(1);
 });
 ```
 
