@@ -8,9 +8,28 @@ module.exports = {
       type: 'attractions',
       sort: 'highestrated'
     };
-
     return new Promise (function(resolve, reject) {
-      let requestString = `http://api.citygridmedia.com/content/places/v2/search/where?type=${search.type}&where=${search.where}&what=places%20to%20visit%20&sort=${search.sort}&format=json&publisher=${process.env.CITYGRID_PUBLISHER}`;
+      Categories.findOne({ 'name': 'Museums' }, 'associated_tags.CityGrid', function(err, category) {
+         if (err) return handleError(err);
+         resolve(category.associated_tags.CityGrid);
+       });
+    }).then(function(argument){
+      return new Promise (function(resolve, reject) {
+      let requestString = `http://api.citygridmedia.com/content/places/v2/search/where?type=${search.type}&where=${search.where}&what=places%20to%20visit%20&sort=${search.sort}&format=json&publisher=10000019378`;
+      request(requestString, function(error, response) {
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else {
+          // console.log('a response-----',response.body);
+          resolve(response.body);
+        }
+      });
+    });
+    });
+    
+    return new Promise (function(resolve, reject) {
+      let requestString = `http://api.citygridmedia.com/content/places/v2/search/where?type=${search.type}&where=${search.where}&what=places%20to%20visit%20&sort=${search.sort}&format=json&publisher=10000019378`;
       request(requestString, function(error, response) {
         if (error) {
           console.error(error);
