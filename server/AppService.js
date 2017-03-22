@@ -3,7 +3,7 @@ const yelp = require('./api/yelp');
 const _ = require('underscore');
 
 let apis = [
-  // citygrid,
+  citygrid,
   yelp
 ];
 
