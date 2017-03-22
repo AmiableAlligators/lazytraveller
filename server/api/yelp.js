@@ -1,14 +1,14 @@
 const Yelp = require('yelp-fusion');
 
-const token = process.env.YELP_TOKEN;
-const yelp = Yelp.client(token);
+const yelp = Yelp.client(process.env.YELP_TOKEN);
 
 module.exports = {
   fetch: function(queryWithFilters) {
     let searchObj = {
       term: 'attractions',
       location: queryWithFilters.query,
-      limit: 20
+      limit: 20,
+      // price: '1,2,3,4' // this will return all price range businesses, but only "businesses"
     };
 
     return new Promise(function(resolve, reject) {
