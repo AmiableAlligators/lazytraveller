@@ -8,7 +8,7 @@ const yelp = new Yelp({
 module.exports = {
   fetch: function(queryWithFilters) {
     let searchObj = {
-      term: '',
+      term: 'attractions',
       location: queryWithFilters.query,
       limit: 20
     };
