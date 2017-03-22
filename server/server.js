@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const AppService = require('./AppService.js')
-const ShortListResults = require('./db/ShortListResults.js');
+const ShortlistResults = require('./db/ShortlistResults.js');
 
 var port = process.env.PORT || 3000;
 
@@ -19,7 +19,7 @@ app.post('/shortlist', function(req, res) {
     // activityid: String,
     // like: Boolean
     // }
-    ShortListResults.insertShortList(req.body);
+    ShortlistResults.insertShortlist(req.body);
     res.send();
 });
 
