@@ -68,7 +68,7 @@ Tests are arranged based on their sections. Files are named based on the parent 
 [Great resource on testing React Components with Mocha & Enzyme](https://medium.freecodecamp.com/react-unit-testing-with-mocha-and-enzyme-77d18b6875cb#.xos1h93qw)
 
 ## What to Test?
-Here is a list of possible tests
+Here is a list of possible tests for React Components
 
 1. It must render
     * Make sure the component renders without error. This verifies there are no JSX syntax errors, that all variables are defined, etc. This could be as simple as verifying that the rendered output is not null.
@@ -84,6 +84,12 @@ Here is a list of possible tests
 
 5. Test the edge cases
     * Anything that operates on an array could have boundary cases — an empty array, an array with 1 element, a paginated list that should truncate at 25 items, and so on. Try out every edge case you can think of, and make sure they all work correctly.
+
+#### Testing the Server (NodeJS, Express)
+1. Start and Stop the server for each Unit Test
+Aside from testing a complex scenario, we want to always test a clean server without any residue from the previous unit tests. Otherwise our tests will pass or fail depending on the order, which is an extremely undesirable and flaky testing approach. Starting and stopping the server for each unit test makes them order-independent.
+
+
 
 ### Sample Tests
 These are common tests that you might want to write for your components.
@@ -110,6 +116,12 @@ it('should have props for email and src', function () {
   expect(wrapper.props().email).to.be.defined;
   expect(wrapper.props().src).to.be.defined;
 });
+
+it('renders items', () => {        
+  const props = {items: { id: 1', title: 'foo'}};
+  const list = shallow(<Release {...props} />);
+  expect(list.find('.item').length).toBe(1);
+});
 ```
 
 4. Checking if a component contains another component
@@ -127,6 +139,15 @@ it('should update the src state on clicking fetch', function () {
   wrapper.setState({ email: 'hello@ifelse.io' });
   wrapper.find('button').simulate('click');
   expect(wrapper.state('email')).to.equal('hello@ifelse.io');
+});
+
+it('toggles the completed status of an item when clicking', () => {
+    const app = mount(<Root />);
+    const item = app.find('#item-1');
+    item.simulate('click');
+    expect(app.find('.completed').length).toBe(1);
+    item.simulate('click');
+    expect(app.find('.completed').length).toBe(0);
 });
 ```
 
