@@ -5,7 +5,7 @@ module.exports = {
   fetch: function(queryWithFilters) {
     var search = {
       where: queryWithFilters.query.split(' ').join('%20'),
-      type: 'travel',
+      type: 'attractions',
       sort: 'highestrated'
     };
 
@@ -16,10 +16,59 @@ module.exports = {
           console.error(error);
           reject(error);
         } else {
-          // console.log('a response-----',response.body);
-          resolve(response.body);
+          resolve(formatData(response.body));
         }
       });
     });
   }
 }
+
+let formatData = apiResult => {
+  let locations = JSON.parse(apiResult).results.locations;
+  let results = [];
+
+  for (let i = 0; i < locations.length; i++) {
+    let currentLocation = locations[i];
+    let currentSubResult = {
+      name: '',
+      address: {
+        street: '',
+        city: '',
+        state: '',
+        postal_code: ''
+      },
+      image: '',
+      location: {
+        longitude: '',
+        latitude: ''
+      },
+      phone_number: '',
+      rating: null,
+      neighborhood: '',
+      isClosed: null,
+      api_reference: {
+        api_name: '',
+        api_id: ''
+      }
+    };
+
+    currentSubResult.name = currentLocation.name;
+    currentSubResult.address.street = currentLocation.address.street;
+    currentSubResult.address.city = currentLocation.address.city;
+    currentSubResult.address.state = currentLocation.address.state;
+    currentSubResult.address.postal_code = currentLocation.address.postal_code;
+    currentSubResult.image = currentLocation.image;
+    currentSubResult.location.longitude = currentLocation.longitude;
+    currentSubResult.location.latitude = currentLocation.latitude;
+    currentSubResult.phone_number = currentLocation.phone_number;
+    currentSubResult.rating = currentLocation.rating;
+    currentSubResult.neighborhood = currentLocation.neighborhood;
+    currentSubResult.isClosed = null;
+    currentSubResult.api_reference.api_name = 'citygrid';
+    currentSubResult.api_reference.api_id =currentLocation.id;
+
+    results.push(currentSubResult);
+  }
+
+  return results;
+};

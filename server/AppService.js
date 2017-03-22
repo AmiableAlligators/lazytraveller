@@ -1,16 +1,19 @@
 const citygrid = require('./api/citygrid');
-// const yelplibrary = require('./api/yelplibrary');
+const yelp = require('./api/yelp');
+const _ = require('underscore');
 
 let apis = [
-  citygrid
-  // yelplibrary
+  citygrid,
+  yelp
 ];
 
+let unique = array => _.uniq(_.flatten(array), obj => obj.name);
+
 /**
- * @queryWithFilters is an Object with structure: 
+ * @queryWithFilters is an Object with structure:
  * {
  *   query: String, what the user is searching for,
- *   filters: Array, of filter-ids   
+ *   filters: Array, of filter-ids
  * }
  */
 const AppService = {
@@ -19,7 +22,13 @@ const AppService = {
       return func.fetch(queryWithFilters);
     });
 
-    return Promise.all(fetches);
+    return Promise.all(fetches)
+    .then(apiResults => {
+      return new Promise((resolve, reject) => {
+        resolve(unique(apiResults));
+      });
+    })
+    .catch(error => console.error(error));
   }
 };
 
