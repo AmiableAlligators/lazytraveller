@@ -27,43 +27,28 @@ let formatData = apiResult => {
   for (let i = 0; i < locations.length; i++) {
     let currentLocation = locations[i];
     let currentSubResult = {
-      name: '',
+      name: currentLocation.name,
       address: {
-        street: '',
-        city: '',
-        state: '',
-        postal_code: ''
+        street: currentLocation.location.address1,
+        city: currentLocation.location.city,
+        state: currentLocation.location.state,
+        postal_code: currentLocation.location.zip_code
       },
-      image: '',
+      image: currentLocation.image_url,
       location: {
-        longitude: '',
-        latitude: ''
+        longitude: currentLocation.coordinates.longitude,
+        latitude: currentLocation.coordinates.latitude
       },
-      phone_number: '',
-      rating: null,
-      neighborhood: '',
-      isClosed: null,
+      phone_number: currentLocation.phone,
+      rating: currentLocation.rating,
+      neighborhood: null,
+      isClosed: currentLocation.is_closed,
       api_reference: {
-        api_name: '',
-        api_id: ''
+        'yelp': {
+          reference_id: currentLocation.id
+        }  
       }
     };
-
-    currentSubResult.name = currentLocation.name;
-    currentSubResult.address.street = currentLocation.location.address1;
-    currentSubResult.address.city = currentLocation.location.city;
-    currentSubResult.address.state = currentLocation.location.state;
-    currentSubResult.address.postal_code = currentLocation.location.zip_code;
-    currentSubResult.image = currentLocation.image_url;
-    currentSubResult.location.longitude = currentLocation.coordinates.longitude;
-    currentSubResult.location.latitude = currentLocation.coordinates.latitude;
-    currentSubResult.phone_number = currentLocation.phone;
-    currentSubResult.rating = currentLocation.rating;
-    currentSubResult.neighborhood = null;
-    currentSubResult.isClosed = currentLocation.is_closed;
-    currentSubResult.api_reference.api_name = 'yelp';
-    currentSubResult.api_reference.api_id =currentLocation.id;
-
     results.push(currentSubResult);
   }
 
