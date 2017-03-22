@@ -1,20 +1,18 @@
-const Yelp = require('yelpv3');
+const Yelp = require('yelp-fusion');
 
-const yelp = new Yelp({
-  app_id: process.env.YELP_APP_ID,
-  app_secret: process.env.YELP_APP_SECRET
-})
+const yelp = Yelp.client(process.env.YELP_TOKEN);
 
 module.exports = {
   fetch: function(queryWithFilters) {
     let searchObj = {
       term: 'attractions',
       location: queryWithFilters.query,
-      limit: 20
+      limit: 20,
+      // price: '1,2,3,4' // this will return all price range businesses, but only "businesses"
     };
 
     return new Promise(function(resolve, reject) {
-      yelp.search(searchObj).then(data => resolve(formatData(data)))
+      yelp.search(searchObj).then(res => resolve(formatData(res.body)))
       .catch(err => reject(err));
     });
   }
@@ -41,12 +39,13 @@ let formatData = apiResult => {
       },
       phone_number: currentLocation.phone,
       rating: currentLocation.rating,
+      price: currentLocation.price ? currentLocation.price : 'free', // maybe need to set to null?
       neighborhood: null,
       isClosed: currentLocation.is_closed,
       api_reference: {
         'yelp': {
           reference_id: currentLocation.id
-        }  
+        }
       }
     };
     results.push(currentSubResult);
