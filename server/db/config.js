@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoURI = 'mongodb://localhost/lazytravellerdb';
+mongoURI = 'mongodb://localhost/' + process.env.DB_NAME;
 mongoose.connect(mongoURI);
 
 var db = mongoose.connection;

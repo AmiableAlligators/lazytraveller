@@ -4,8 +4,9 @@ const express = require('express');
 
 const app = express();
 const bodyParser = require('body-parser');
-const AppService = require('./AppService.js')
+const AppService = require('./AppService.js');
 const data = require('./../data/sampleData');
+const Categories = require('./db/categories.js');
 
 var port = process.env.PORT || 3000;
 
