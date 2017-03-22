@@ -69,12 +69,13 @@ let formatData = apiResult => {
       },
       phone_number: currentLocation.phone_number,
       rating: currentLocation.rating,
+      price: null,
       neighborhood: currentLocation.neighborhood,
       isClosed: null,
       api_reference: {
         'citygrid': {
           reference_id: currentLocation.id
-        }  
+        }
       }
     };
     results.push(currentSubResult);
