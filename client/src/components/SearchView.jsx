@@ -36,8 +36,8 @@ export default class SearchView extends React.Component {
 
   render () {
     return (
-      <div className="appNav">
-        <h1>Lazy Traveller</h1>
+      <div className="eight wide column">
+        <h1 style={{'textAlign': 'center'}}>Lazy Traveller</h1>
         <div>
           <SearchBar stateHandler={ this.stateHandler } 
             submitHandler={ this.submitHandler } />

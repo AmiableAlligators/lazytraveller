@@ -24,15 +24,20 @@ export default class SearchBar extends React.Component {
 
   render () {
     return (
-      <div className="SearchBar">
+      <div className="ui left action input">
+        <button className="ui button">
+          Use GPS
+        </button>
         <input type="text" 
           name="searchQuery"
           value={ this.state.searchQuery } 
-          onChange={ this.handleChange } />
+          onChange={ this.handleChange } 
+          placeholder="Enter location or use GPS" />
         <button name="submit" 
-          className="submit" 
+          style={{'display': 'block'}}
+          className="ui primary button"
           onClick={ this.submission }>
-        submit</button>
+          Search</button>
       </div>
     );
   }
