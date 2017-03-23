@@ -76,7 +76,7 @@ export default class SearchBar extends React.Component {
         {
           this.state.isGeolocationSupported &&
           <button className="ui button"
-            onClick={this.getCurrentPosition} >
+            onClick={ this.getCurrentPosition } >
             Use GPS
           </button>
         }

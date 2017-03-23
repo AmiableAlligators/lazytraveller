@@ -1,55 +1,90 @@
 import React from 'react';
 import FilterListEntry from './FilterListEntry.jsx'
 
-const FilterList = (props) => (
-  <div className="eight wide column">
-    <div className="ui styled fluid accordion">
-		  <div className="title active">
-		    Filters
-		    <i className="dropdown icon"></i>
-		  </div>
-		  <div className="content active">
-			  <h5 className="ui top attached header">
-				  Location &amp; Time
-				</h5>
-		  	<div className="ui attached segment" style={{overflow: 'hidden'}}>
-		  		<div style={{display: 'block', width: '30%', float: 'left', overflow: 'hidden'}}>
-			  		<label >Duration</label>
-			  		<input type="text" placeholder="duration" />
-		  		</div>
-		  		
-		  		<div style={{display: 'block', width: '30%', float: 'left', overflow: 'hidden'}}>
-		  			<label>Location</label>
-			  		<input type="text" placeholder="start" />
-			  		<input type="text" placeholder="end" />
-		  		</div>
-		  		<div style={{display: 'block', width: '30%', float: 'left', overflow: 'hidden'}}>
-			  		<label>Budget</label>
-			  		<input type="text" placeholder="budget" />
-		  		</div>
-		  	</div>
-		  	<h5 className="ui top attached header">
-		  		<input type="checkbox" />
-				  City Activities
-				</h5>
-		  	<div className="ui attached segment">
-		  		{
-			      props.filters.map(filter => (
-			        <FilterListEntry key={filter.id} filter={filter} />
-			      ))
-			    }
-		  	</div>
-		  	<h5 className="ui top attached header">
-		  		<input type="checkbox" />
-				  Outdoor Activities
-				</h5>
-		  	<div className="ui attached segment">
-		  		fjkdlsfs
-		  	</div>
-		    <p className="transition"></p>
-		  </div>
-		 </div>
-  </div>
-);
+export default class FilterList extends React.Component {
+	constructor(props) {
+		super(props);
 
-export default FilterList;
+		this.getFilterType = this.getFilterType.bind(this);
+	}
+
+	getFilterType(filters, type) {
+		filters = filters || [];
+		return filters.filter(filter => (
+			filter.type === type
+		));
+	}
+
+	render() {
+		return (
+			 <div className="eight wide column">
+		    <div className="ui styled fluid accordion">
+				  <div className="title active">
+				    Filters
+				    <i className="dropdown icon"></i>
+				  </div>
+				  <div className="content active">
+					  <h5 className="ui top attached header">
+						  Location &amp; Time
+						</h5>
+				  	<div className="ui attached stackable three column segment grid">
+				  		<div className="column">
+					  		<label>Duration</label>
+					  		<input type="text" placeholder="duration" />
+				  		</div>
+				  		
+				  		<div className="column">
+				  			<label>Location</label>
+					  		<input type="text" placeholder="start" />
+					  		<input type="text" placeholder="end" />
+				  		</div>
+				  		<div className="column">
+					  		<label>Budget</label>
+					  		<input type="text" placeholder="budget" />
+				  		</div>
+				  	</div>
+
+				  	<h5 className="ui top attached header">
+				  		<label>
+				  			<input type="checkbox" value="city"
+				  				onClick={ this.props.updateFilter } />
+						  	City Activities
+						  </label>
+						</h5>
+				  	<div className="ui attached stackable three column segment grid">
+				  		{	
+				  			this.props.filters &&
+					      this.getFilterType(this.props.filters, 'city').map(filter => (
+					        <FilterListEntry 
+					        	isChecked={ filter.checked }
+					        	key={ filter._id } 
+					        	filter={ filter } 
+					        	updateFilter={ this.props.updateFilter } />
+					      ))
+					    }
+				  	</div>
+				  	<h5 className="ui top attached header">
+				  		<label>
+					  		<input type="checkbox" value="outdoor"
+					  			onClick={ this.props.updateFilter } />
+						  	Outdoor Activities
+						  </label>
+						</h5>
+				  	<div className="ui attached stackable three column segment grid">
+				  		{	
+				  			this.props.filters &&
+					      this.getFilterType(this.props.filters, 'outdoor').map(filter => (
+					        <FilterListEntry 
+					        	isChecked={ filter.checked }
+					        	key={ filter._id } 
+					        	filter={ filter }
+					        	updateFilter={ this.props.updateFilter } />
+					      ))
+					    }
+				  	</div>
+				  </div>
+				 </div>
+		  </div>
+		)
+	}
+}
