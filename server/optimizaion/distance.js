@@ -1,14 +1,22 @@
 const geolib = require('geolib');
 
-let distanceOptimization = ( start, end, locations ) => {
+let distanceOptimization = ( start, end, radius, locations ) => {
   // find the center point between start and end
   let center = geolib.getCenter( [ start.location, end.location ] );
-  // from the center, use the half distance as the radius to make a circle
-  let radius = geolib.getDistance( start.location, end.location ) / 2;
+  // from the center, use the user input radius or the half of distance as the radius to make a circle
+  radius = radius || geolib.getDistance( start.location, end.location ) / 2;
   // find all activity locations that are inside of the circle
-  let inRangeLocations = locations.filter( obj => {
-    return geolib.isPointInCircle( obj.location, center, radius); // use 8000 as radius for testing
+  // also need to return all out range locations to user
+  let inRangeLocations = [];
+  let outRangeLocations = [];
+  locations.forEach( obj => {
+    if (geolib.isPointInCircle( obj.location, center, radius)) {
+      inRangeLocations.push(obj);
+    } else {
+      outRangeLocations.push(obj);
+    }
   });
+
   // initialize the optimized results
   let optimized = [];
   // use a recursive function to find the "next nearest location" from the start location
@@ -40,6 +48,8 @@ let distanceOptimization = ( start, end, locations ) => {
   findPath(inRangeLocations, start);
   // optimized result should include the end point
   optimized.push(end);
+  // the last element in the optimized array will be a sub-array which contains all outRangeLocations
+  optimized.push(outRangeLocations);
 
   return optimized;
 };
@@ -439,6 +449,6 @@ let end = {
     }
 };
 
-let result = distanceOptimization(start, end, locations);
+let result = distanceOptimization(start, end, 8000, locations);
 
 // console.log(result);
