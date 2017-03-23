@@ -19,27 +19,28 @@ export default class SearchView extends React.Component {
 
     this.state = {
       filters: [],
-      query: null,
+      query: '',
     }
     this.submitHandler = this.submitHandler.bind(this);
-    this.stateHandler = this.stateHandler.bind(this);
+    this.updateQuery = this.updateQuery.bind(this);
   }
 
-  submitHandler() {
+  submitHandler(query) {
     this.props.sendHandler(this.state.query, this.state.filters);
   }
 
-  stateHandler(stateObj) {
-    this.setState(stateObj);
+  updateQuery(query) {
+    this.setState({
+      query: query
+    });
   }
-
 
   render () {
     return (
       <div className="eight wide column">
         <h1 style={{'textAlign': 'center'}}>Lazy Traveller</h1>
         <div>
-          <SearchBar stateHandler={ this.stateHandler } 
+          <SearchBar updateQuery={ this.updateQuery }
             submitHandler={ this.submitHandler } />
         </div>
         <div>
