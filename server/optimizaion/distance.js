@@ -10,46 +10,46 @@ let distanceOptimization = ( start, end, radius, locations ) => {
   let inRangeLocations = [];
   let outRangeLocations = [];
   locations.forEach( obj => {
-    if (geolib.isPointInCircle( obj.location, center, radius)) {
-      inRangeLocations.push(obj);
+    if ( geolib.isPointInCircle( obj.location, center, radius )) {
+      inRangeLocations.push( obj );
     } else {
-      outRangeLocations.push(obj);
+      outRangeLocations.push( obj );
     }
   });
 
   // initialize the optimized results
   let optimized = [];
   // use a recursive function to find the "next nearest location" from the start location
-  let findPath = (locations, startPoint) => {
+  let findPath = ( locations, startPoint ) => {
     // base case
-    if (!locations.length) {
+    if ( !locations.length ) {
       return;
     }
     // re-initialize for each recursion
     let minDist = null;
     let index = null;
     // use loop to find minimum distance
-    for (let i = 0; i < locations.length; i++) {
-      let currLocation = locations[i];
+    for ( let i = 0; i < locations.length; i++ ) {
+      let currLocation = locations[ i ];
       let dist = geolib.getDistance( start.location, currLocation.location );
-      if ( dist < minDist || !minDist) {
+      if ( dist < minDist || !minDist ) {
         minDist = dist;
         index = i;
       }
     }
     // push the current nearest location into optimized array
-    optimized.push(locations[index]);
+    optimized.push( locations[ index ] );
     // let the current nearest be the next start point, and remove it from target array
-    let nextStart = locations.splice(index, 1);
+    let nextStart = locations.splice( index, 1 );
     // recursively call
-    findPath(locations, nextStart);
+    findPath( locations, nextStart );
   };
 
-  findPath(inRangeLocations, start);
+  findPath( inRangeLocations, start );
   // optimized result should include the end point
-  optimized.push(end);
+  optimized.push( end );
   // the last element in the optimized array will be a sub-array which contains all outRangeLocations
-  optimized.push(outRangeLocations);
+  optimized.push( outRangeLocations );
 
   return optimized;
 };
