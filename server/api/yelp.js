@@ -1,5 +1,5 @@
 const Yelp = require('yelp-fusion');
-const DatabaseResults = require('./../db/DatabaseResults.js');
+const ApiResults = require('./../db/ApiResults.js');
 
 const yelp = Yelp.client(process.env.YELP_TOKEN);
 
@@ -48,7 +48,7 @@ let formatData = apiResult => {
         reference_id: currentLocation.id
       }
     };
-    DatabaseResults.insertDatabaseResult(currentSubResult);
+    ApiResults.insertApiResult(currentSubResult);
     results.push(currentSubResult);
   }
 
