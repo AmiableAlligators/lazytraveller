@@ -8,10 +8,16 @@ export default class Layout extends React.Component {
 	constructor(props) {
 		super(props);
     this.state = {
-      results: null
+      results: null,
+      filters: []
     }
     this.fetch = this.fetch.bind(this);
+    this.fetchCategories = this.fetchCategories.bind(this);
 	}
+
+  componentDidMount() {
+    this.fetchCategories();
+  }
 
   fetch(query, filters) {
     let queryWithFilters = {
@@ -35,9 +41,28 @@ export default class Layout extends React.Component {
     });
   }
 
+  fetchCategories() {
+    $.ajax({
+      url: '/categories', 
+      method: 'GET',
+      success: (data) => {
+        data = data.map(filter => {
+          filter.checked = false;
+          return filter;
+        })
+        this.setState({
+          filters: data
+        });
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
   shortListing(input) {
     $.ajax({
-      url: 'http://localhost:3000/shortlist', 
+      url: '/shortlist', 
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       success: (data) => {
@@ -52,7 +77,8 @@ export default class Layout extends React.Component {
     return (
       <div className="ui two column centered grid">
         <div className="ten wide column">
-          <SearchView sendHandler={ this.fetch } />
+          <SearchView sendHandler={ this.fetch }
+            filters={ this.state.filters } />
           <ShortlistView data={ this.state.results } />
         </div>
       </div>
