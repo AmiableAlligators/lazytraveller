@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
-const Categories = require('./../db/categories.js');
+const Categories = require('./../db/Categories.js');
+const DatabaseResults = require('./../db/DatabaseResults.js');
 
 module.exports = {
   fetch: function(queryWithFilters) {
@@ -71,11 +72,11 @@ let formatData = apiResult => {
       neighborhood: currentLocation.neighborhood,
       isClosed: null,
       api_reference: {
-        'citygrid': {
-          reference_id: currentLocation.id
-        }
+        api: 'CityGrid',
+        reference_id: currentLocation.id
       }
     };
+    DatabaseResults.insertDatabaseResult(currentSubResult);
     results.push(currentSubResult);
   }
 
