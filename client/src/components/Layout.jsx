@@ -50,9 +50,11 @@ export default class Layout extends React.Component {
 
   render () {
     return (
-      <div className="container">
-        <SearchView sendHandler={ this.fetch } />
-        <ShortlistView data={ this.state.results } />
+      <div className="ui two column centered grid">
+        <div className="ten wide column">
+          <SearchView sendHandler={ this.fetch } />
+          <ShortlistView data={ this.state.results } />
+        </div>
       </div>
     );
   }

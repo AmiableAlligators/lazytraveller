@@ -15,7 +15,7 @@ export default class ShortlistView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="eight wide column">
         <h1>ShortList</h1>
         {
           this.props.data &&
