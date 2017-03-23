@@ -72,7 +72,7 @@ export default class SearchBar extends React.Component {
 
   render () {
     return (
-      <div className="ui left action input">
+      <div className="ui left action input fluid">
         {
           this.state.isGeolocationSupported &&
           <button className="ui button"
@@ -86,7 +86,6 @@ export default class SearchBar extends React.Component {
           onChange={ this.handleChange } 
           placeholder="Enter location or use GPS" />
         <button name="submit" 
-          style={{'display': 'block'}}
           className="ui primary button"
           onClick={ this.submission }>
           Search</button>

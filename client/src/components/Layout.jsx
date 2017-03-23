@@ -79,7 +79,10 @@ export default class Layout extends React.Component {
         <div className="ten wide column">
           <SearchView sendHandler={ this.fetch }
             filters={ this.state.filters } />
-          <ShortlistView data={ this.state.results } />
+          {
+            this.state.results &&
+            <ShortlistView data={ this.state.results } />
+          }
         </div>
       </div>
     );
