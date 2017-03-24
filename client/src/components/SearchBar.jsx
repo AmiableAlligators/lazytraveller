@@ -16,7 +16,7 @@ export default class SearchBar extends React.Component {
     }
     this.submission = this.submission.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.getCurrentPosition = this.getCurrentPosition.bind(this);
+    this.getCurrentLocation = this.getCurrentLocation.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class SearchBar extends React.Component {
     });
   }
 
-  getCurrentPosition() {
+  getCurrentLocation() {
     GeoLocation.getCurrentPosition(function (label, coords, err) {
       this.setState(prevState => {
         this.props.updateQuery(label);
@@ -61,7 +61,7 @@ export default class SearchBar extends React.Component {
         {
           this.state.isGeolocationSupported &&
           <button className="ui button"
-            onClick={ this.getCurrentPosition } >
+            onClick={ this.getCurrentLocation } >
             Use GPS
           </button>
         }
