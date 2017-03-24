@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import GeoLocation from './../utils/geoLocation.jsx';
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -16,47 +17,31 @@ export default class SearchBar extends React.Component {
     this.submission = this.submission.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getCurrentPosition = this.getCurrentPosition.bind(this);
-    this.reverseGeocode = this.reverseGeocode.bind(this);
   }
 
   componentDidMount() {
-    if (navigator.geolocation) {
-      this.setState({ isGeolocationSupported: true })
-    }
+    GeoLocation.isSupported((isSupported, errorMessage) => {
+      this.setState({
+        isGeolocationSupported: isSupported,
+        geolocationSupportError: errorMessage
+      });
+    });
   }
 
   getCurrentPosition() {
-    if (!this.state.isGeolocationSupported) {
-      return console.log('Your browser does not support geolocation.');
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.reverseGeocode(position.coords.latitude, position.coords.longitude)
-      },
-      error => {
-        console.log('Error occurred. Error code: ', error.code);
-      });
-  }
-
-  reverseGeocode(lat, lon) {
-    $.ajax({
-      url: `https://search.mapzen.com/v1/reverse?api_key=${process.env.MAPZEN_KEY}&point.lat=${lat}&point.lon=${lon}&size=1&sources=osm`,
-      method: 'GET',
-      success: function(results) {
-        this.setState(prevState => {
-          this.props.updateQuery(results.features[0].properties.label);
-          return {
-            currentPosition: {
-              latitude: lat,
-              longitude: lon,
-              location: results.features[0].properties.label
-            },
-            searchQuery: results.features[0].properties.label
-          }
-        })
-      }.bind(this)
-    })
+    GeoLocation.getCurrentPosition(function (label, coords, err) {
+      this.setState(prevState => {
+        this.props.updateQuery(label);
+        return {
+          currentPosition: {
+            latitude: coords.lat,
+            longitude: coords.lon,
+            location: label
+          },
+          searchQuery: label
+        }
+      })
+    }.bind(this));
   }
 
   submission () {
