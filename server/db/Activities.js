@@ -35,11 +35,6 @@ activitiesSchema.statics.add = function(result) {
       reject(error);
     })
   });
-  // newActivities.save().then(function() {
-  //   console.log('activity saved'); 
-  // }, function(err) {
-  //   console.log(err);
-  // });
 }
 var Activities = mongoose.model('activities', activitiesSchema);
 

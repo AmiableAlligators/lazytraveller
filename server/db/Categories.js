@@ -6,7 +6,8 @@ var categoriesSchema = mongoose.Schema({
   name: String,
   type: String,
   associated_tags: {
-    CityGrid: [Number]
+    CityGrid: [Number],
+    Yelp: [String]
   }
 });
 
