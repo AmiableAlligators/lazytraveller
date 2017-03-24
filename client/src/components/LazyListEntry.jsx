@@ -2,8 +2,21 @@ import React from 'react';
 
 const LazyListEntry = ({ activity }) => (
   <li>
-    <img src={ activity.img } />
-    <div>{ activity.name }</div>
+  	<div className="ui card">
+	    <div className="image">
+	      <img src={ activity.image } />
+	    </div>
+	    <div className="content">
+	      <a className="header">{ activity.name }</a>
+	      <div className="meta">
+	        <span className="">Rating: { activity.rating }</span>
+	        <span className="">{ activity.price }</span>
+	      </div>
+	      <div className="description">
+	        { activity.description }
+	      </div>
+	    </div>
+	  </div>
   </li>
 );
 

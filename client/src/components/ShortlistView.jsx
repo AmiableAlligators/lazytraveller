@@ -23,7 +23,8 @@ export default class ShortlistView extends React.Component {
             <ActivityView
               key= { Math.random() }
               activity={ item }
-              handleClick={ this.handleClick } />
+              handleClick={ this.handleClick }
+              shortlist={ this.props.shortlist } />
           ))
         }
       </div>
