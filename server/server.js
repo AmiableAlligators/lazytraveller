@@ -21,6 +21,25 @@ app.post('/shortlist', function(req, res) {
     res.send();
 });
 
+/**
+ * Main Query Route
+ * @param  {Object}   req.body  contains:
+ *     {
+ *       query: String user's input,
+ *       filters: Array Categories.ids
+ *       limits: {
+ *         budget: String dollar signs E.g. $ or $$$,
+ *         duration: String,
+ *         location: {
+ *           start: String or Object,
+ *           end: String or Object (See below)
+ *           // Note: If user got their location with GPS, this will be
+ *           // an object with place, coords {lat: xxx, lon: xxx}
+ *           // otherwise, if they typed their location in, it would be a String
+ *         }
+ *       }
+ *     }
+ */
 app.post('/query', function(req, res) {
 	let queryWithFilters = req.body;
   AppService.find(queryWithFilters)

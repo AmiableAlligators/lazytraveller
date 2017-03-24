@@ -8,11 +8,17 @@ export default class SearchView extends React.Component {
 
     this.state = {
       query: '',
-      filters: props.filters
+      filters: props.filters,
+      budget: '',
+      duration: '',
+      startLocation: '',
+      endLocation: ''
     }
+
     this.submitHandler = this.submitHandler.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
+    this.updateLimits = this.updateLimits.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +34,23 @@ export default class SearchView extends React.Component {
         filters.push(filter._id);
       }
     })
-    this.props.sendHandler(this.state.query, filters);
+
+    let limits = {
+      budget: this.state.budget,
+      duration: this.state.duration,
+      location: {
+        start: this.state.startLocation,
+        end: this.state.endLocation
+      }
+    }
+
+    this.props.sendHandler(this.state.query, filters, limits);
+  }
+
+  updateQuery(query) {
+    this.setState({
+      query: query
+    });
   }
 
   /**
@@ -60,10 +82,8 @@ export default class SearchView extends React.Component {
     });
   }
 
-  updateQuery(query) {
-    this.setState({
-      query: query
-    });
+  updateLimits(limits) {
+    this.setState(limits)
   }
 
   render () {
@@ -73,7 +93,9 @@ export default class SearchView extends React.Component {
           <SearchBar updateQuery={ this.updateQuery }
             submitHandler={ this.submitHandler } />
           <FilterList filters={ this.state.filters } 
-            updateFilter={ this.updateFilter } />
+            updateFilter={ this.updateFilter }
+            updateLimits={ this.updateLimits }
+            limitsStartLocation={ this.state.startLocation.place } />
       </div>
     );
   }
