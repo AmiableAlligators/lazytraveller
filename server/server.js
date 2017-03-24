@@ -41,6 +41,18 @@ app.post('/shortlist', function(req, res) {
  *       }
  *     }
  */
+ app.post('/optimization/distance', function(req, res) {
+   let start = req.body.limits.location.start;
+   let end = req.body.limits.location.end;
+   let radius = req.body.limits.location.radius || null; 
+   let activities = req.body.activities
+
+   distanceOptimization(start, end, radius, activities)
+   .then(data => {
+     res.json(data);
+   });
+ });
+
 app.post('/query', function(req, res) {
 	let queryWithFilters = req.body;
   AppService.find(queryWithFilters)
@@ -60,18 +72,6 @@ app.get('/categories', function(req, res) {
     .catch(error => {
       res.send(error);
     })
-});
-
-app.post('/optimization/distance', function(req, res) {
-  let start = req.body.start;
-  let end = req.body.end;
-  let radius = req.body.radius;
-  let locations = req.body.locations;
-
-  distanceOptimization(start, end, radius, locations)
-  .then(data => {
-    res.json(data);
-  });
 });
 
 // ««««««««« start app  »»»»»»»»»
