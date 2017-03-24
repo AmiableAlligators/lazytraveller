@@ -6,7 +6,7 @@ const priceBased = require('./optimizaion/price');
 const priceLimit = 4; // hard coded for now, this should be a number from 1 to 4
 
 let apis = [
-  citygrid,
+  // citygrid,
   yelp
 ];
 

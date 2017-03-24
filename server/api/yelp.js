@@ -6,6 +6,7 @@ module.exports = {
   fetch: function(queryWithFilters) {
     let searchObj = {
       term: 'attractions',
+      categories: 'cupcakes,bubbletea,coffee',
       location: queryWithFilters.query,
       limit: 20,
       // price: '1,2,3,4' // this will return all price range businesses, but only "businesses"
