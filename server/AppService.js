@@ -2,11 +2,12 @@ const citygrid = require('./api/citygrid');
 const yelp = require('./api/yelp');
 const _ = require('underscore');
 const priceBased = require('./optimizaion/price');
+const Activities = require('./db/Activities.js');
 
 const priceLimit = 4; // hard coded for now, this should be a number from 1 to 4
 
 let apis = [
-  // citygrid,
+  citygrid,
   yelp
 ];
 
@@ -29,10 +30,13 @@ const AppService = {
     .then(apiResults => {
       return new Promise((resolve, reject) => {
         // resolve(priceBased(unique(apiResults), priceLimitation)); // for testing
+        unique(apiResults).map(result => {
+          Activities.add(result);   
+        });
         resolve(unique(apiResults));
       });
     })
-    .catch(error => console.error(error));
+    .catch(error => console.error(error)); 
   }
 };
 

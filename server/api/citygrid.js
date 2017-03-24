@@ -1,7 +1,6 @@
 const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
 const Categories = require('./../db/Categories.js');
-const Activities = require('./../db/Activities.js');
 
 module.exports = {
   fetch: function(queryWithFilters) {
@@ -76,7 +75,6 @@ let formatData = apiResult => {
         reference_id: currentLocation.id
       }
     };
-    Activities.add(currentSubResult);
     results.push(currentSubResult);
   }
 
