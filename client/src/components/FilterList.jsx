@@ -1,5 +1,6 @@
 import React from 'react';
-import FilterListEntry from './FilterListEntry.jsx'
+import FilterListEntry from './FilterListEntry.jsx';
+import GeoLocation from './../utils/geoLocation.jsx';
 
 export default class FilterList extends React.Component {
 	constructor(props) {
@@ -11,6 +12,22 @@ export default class FilterList extends React.Component {
 
 		this.getFilterType = this.getFilterType.bind(this);
 		this.showFilters = this.showFilters.bind(this);
+		this.setBudget = this.setBudget.bind(this);
+		this.setDuration = this.setDuration.bind(this);
+		this.setLocation = this.setLocation.bind(this);
+		this.getCurrentLocation = this.getCurrentLocation.bind(this);
+	}
+
+	getCurrentLocation(event) {
+		let locationType = event.target.name;
+		GeoLocation.getCurrentPosition((label, coords, err) => {
+			this.props.updateLimits({
+				[locationType]: {
+					place: label,
+					coords
+				}
+			})
+		})
 	}
 
 	getFilterType(filters, type) {
@@ -24,6 +41,24 @@ export default class FilterList extends React.Component {
 		this.setState({
 			isFiltering: !this.state.isFiltering
 		})
+	}
+
+	setDuration(event) {
+		this.props.updateLimits({
+			duration: event.target.value
+		})
+	}
+
+	setBudget(event) {
+		this.props.updateLimits({
+			budget: event.target.value
+		});
+	}
+
+	setLocation(event) {
+		this.props.updateLimits({
+			[event.target.name]: event.target.value
+		});
 	}
 
 	render() {
@@ -44,18 +79,54 @@ export default class FilterList extends React.Component {
 							</h5>
 					  	<div className="ui attached stackable three column segment grid">
 					  		<div className="column">
-						  		<label>Duration</label>
-						  		<input type="text" placeholder="duration" />
+						  		<label>Duration (h)</label>
+						  		<div className="ui input fluid">
+							  		<input type="text" placeholder="Time in hours"
+							  			onChange={ this.setDuration } />
+							  	</div>
 					  		</div>
 					  		
 					  		<div className="column">
 					  			<label>Location</label>
-						  		<input type="text" placeholder="start" />
-						  		<input type="text" placeholder="end" />
+      							<div className="ui right action input fluid mini">      								
+								  		<input type="text" placeholder="start at..." 
+								  			name="startLocation" 
+								  			value={ this.props.limitsStartLocation }
+								  			onChange={ this.setLocation } />
+								  		<button className="ui button mini"
+								  			name="startLocation"
+						            onClick={ this.getCurrentLocation } >
+						            Use GPS
+						          </button>	
+								  	</div>
+      							<div className="ui right action input fluid mini">
+								  		<input type="text" placeholder="end at..." 
+								  			name="endLocation"
+								  			onChange={ this.setLocation } />
+								  		<button className="ui button mini"
+								  			name="endLocation"
+						            onClick={ this.getCurrentLocation } >
+						            Use GPS
+						          </button>
+								  	</div>
 					  		</div>
+
 					  		<div className="column">
-						  		<label>Budget</label>
-						  		<input type="text" placeholder="budget" />
+					  			<div onChange={ this.setBudget } >
+							  		<label>Budget</label>
+							  		<label>
+							  			<input type="radio" name="budget" value="$" />
+	        						$</label>
+	        					<label>
+							  			<input type="radio" name="budget" value="$$" />
+	        						$$</label>	
+	        					<label>
+							  			<input type="radio" name="budget" value="$$$" />
+	        						$$$</label>
+	        					<label>
+							  			<input type="radio" name="budget" value="$$$$" />
+	        						$$$$</label>
+	        				</div>
 					  		</div>
 					  	</div>
 

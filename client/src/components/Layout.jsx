@@ -21,10 +21,11 @@ export default class Layout extends React.Component {
     this.fetchCategories();
   }
 
-  fetch(query, filters) {
+  fetch(query, filters, limits) {
     let queryWithFilters = {
       query: query,
-      filters: filters
+      filters: filters,
+      limits: limits
     }
     $.ajax({
       url: '/query',
