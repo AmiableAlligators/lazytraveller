@@ -28,11 +28,18 @@ var activitiesSchema = mongoose.Schema({
 
 activitiesSchema.statics.add = function(result) {
   let newActivities = new Activities(result);
-  newActivities.save().then(function() {
-    console.log('activity saved'); 
-  }, function(err) {
-    console.log(err);
+  return new Promise ((resolve, reject) => {
+    newActivities.save().then(function() {
+      resolve();
+    }).catch(function(error) {
+      reject(error);
+    })
   });
+  // newActivities.save().then(function() {
+  //   console.log('activity saved'); 
+  // }, function(err) {
+  //   console.log(err);
+  // });
 }
 var Activities = mongoose.model('activities', activitiesSchema);
 
