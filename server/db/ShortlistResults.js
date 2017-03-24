@@ -4,7 +4,11 @@ var db = require('./config');
 var ShortlistResultsSchema = mongoose.Schema({
   user_id: Number,
   activity_id: String,
-  like: Boolean
+  like: Boolean,
+  query: {
+  	id: Number,
+  	string: String
+  }
 });
 
 var ShortlistResults = mongoose.model('ShortlistResults', ShortlistResultsSchema);
