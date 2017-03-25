@@ -6,16 +6,22 @@ var ShortlistResultsSchema = mongoose.Schema({
   activity_id: String,
   like: Boolean,
   query: {
-  	id: Number,
+  	id: String,
   	string: String
   }
 });
 
-var ShortlistResults = mongoose.model('ShortlistResults', ShortlistResultsSchema);
-
-ShortlistResults.insertShortlist = function(reqBody) {
-  let newShortlistItem = new ShortlistResults(reqBody);
-  newShortlistItem.save();
+ShortlistResultsSchema.statics.shortlist = function(shortlist) {
+	let newShortlist = new ShortlistResults(shortlist);
+	return new Promise((resolve, reject) => {
+		newShortlist.save().then(result => {
+			resolve(result);
+		}).catch(error => {
+			reject(error);
+		})
+	})
 }
+
+var ShortlistResults = mongoose.model('ShortlistResults', ShortlistResultsSchema);
 
 module.exports = ShortlistResults; 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ActivityView = ({ activity, handleLikeClick, shortlist }) => (
+const ActivityView = ({ activity, shortlist, discard }) => (
   <div className="ui card">
     <div className="image">
       <img src={ activity.image } />
@@ -23,9 +23,9 @@ const ActivityView = ({ activity, handleLikeClick, shortlist }) => (
     <div className="extra content">
       <div className="ui two buttons">
         <div className="ui basic red button"
-          onClick={ () => { handleClick( false, activity.id ) } }>Dislike</div>
+          onClick={ discard.bind(null, activity._id) }>Dislike</div>
         <div className="ui basic green button"
-          onClick={ shortlist.bind(null, activity.id) }>Shortlist</div>
+          onClick={ shortlist.bind(null, activity._id) }>Shortlist</div>
       </div>
     </div>
   </div>

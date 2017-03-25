@@ -3,16 +3,16 @@ import LazyListEntry from './LazyListEntry.jsx'
 
 const LazyList = ({ data }) => {
   return (
-  	<ul>
+  	<div className="ui cards scroll" style={{display: '-webkit-box'}}>
 	    {
 	    	data &&
 	    	data.map((item) => (
 	    		<LazyListEntry 
-	    			key={ item.id }
+	    			key={ item._id }
 	    			activity={ item } />
 	    	))
 	    }
-  	</ul>
+  	</div>
   )
 };
 

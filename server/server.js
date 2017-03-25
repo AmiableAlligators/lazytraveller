@@ -17,27 +17,45 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/public'));
 
+/**
+ * Shortlists an Activity.
+ * @param  {Object} req.body  contains:
+ *     user_id: Number,
+ *     activity_id: String,
+ *     like: Boolean,
+ *     query: {
+ *       id: String,
+ *       string: String
+ *     },
+ *     completed: Boolean
+ */
 app.post('/shortlist', function(req, res) {
-    ShortlistResults.insertShortlist(req.body);
-    res.send();
+  ShortlistResults.shortlist(req.body)
+    .then(result => {
+      res.status(201).send(result);
+    })
+    .catch(error => {
+      res.status(404).send(error.message);
+    });
+  if (req.body.completed) {
+    // initiate Optimization
+  }
 });
 
 /**
  * Main Query Route
  * @param  {Object}   req.body  contains:
- *     {
- *       query: String user's input,
- *       filters: Array Categories.ids
- *       limits: {
- *         budget: String dollar signs E.g. $ or $$$,
- *         duration: String,
- *         location: {
- *           start: String or Object,
- *           end: String or Object (See below)
- *           // Note: If user got their location with GPS, this will be
- *           // an object with place, coords {lat: xxx, lon: xxx}
- *           // otherwise, if they typed their location in, it would be a String
- *         }
+ *     query: String user's input,
+ *     filters: Array Categories.ids
+ *     limits: {
+ *       budget: String dollar signs E.g. $ or $$$,
+ *       duration: String,
+ *       location: {
+ *         start: String or Object,
+ *         end: String or Object (See below)
+ *         // Note: If user got their location with GPS, this will be
+ *         // an object with place, coords {lat: xxx, lon: xxx}
+ *         // otherwise, if they typed their location in, it would be a String
  *       }
  *     }
  */
