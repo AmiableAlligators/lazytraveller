@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const AppService = require('./AppService.js')
 const ShortlistResults = require('./db/ShortlistResults.js');
 const Categories = require('./db/Categories.js');
+const distanceOptimization = require('./optimizaion/distance')
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -40,6 +41,18 @@ app.post('/shortlist', function(req, res) {
  *       }
  *     }
  */
+ app.post('/optimization/distance', function(req, res) {
+   let start = req.body.limits.location.start;
+   let end = req.body.limits.location.end;
+   let radius = req.body.limits.location.radius || null; 
+   let activities = req.body.activities
+
+   distanceOptimization(start, end, radius, activities)
+   .then(data => {
+     res.json(data);
+   });
+ });
+
 app.post('/query', function(req, res) {
 	let queryWithFilters = req.body;
   AppService.find(queryWithFilters)

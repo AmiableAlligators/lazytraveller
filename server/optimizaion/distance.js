@@ -1,6 +1,6 @@
 const geolib = require('geolib');
 
-let distanceOptimization = ( start, end, radius, locations ) => {
+module.exports = ( start, end, radius, locations ) => {
   // find the center point between start and end
   let center = geolib.getCenter( [ start.location, end.location ] );
   // from the center, use the user input radius or the half of distance as the radius to make a circle
@@ -51,10 +51,11 @@ let distanceOptimization = ( start, end, radius, locations ) => {
   // the last element in the optimized array will be a sub-array which contains all outRangeLocations
   optimized.push( outRangeLocations );
 
-  return optimized;
+  // return optimized;
+  return new Promise( ( resolve, reject ) => {
+    resolve(optimized);
+  });
 };
-
-module.exports = distanceOptimization;
 
 
 
