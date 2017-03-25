@@ -31,8 +31,8 @@ app.use(express.static(__dirname + '/../client/public'));
  *     limits: Object
  */
 app.post('/shortlist', function(req, res) {
-  console.log(req.body);
   if (req.body.completed) {
+    // add one last ShortlistResult
 
     ShortlistResults.find({ 'query.id': req.body.query.id}).exec()
       .then(results => {
