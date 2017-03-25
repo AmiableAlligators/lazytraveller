@@ -4,6 +4,7 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 const distanceMatrix = Promise.promisify(googleMapsClient.distanceMatrix);
+const geocode = Promise.promisify(googleMapsClient.geocode);
 
 module.exports = {
   travelTime: function(start, end, mode) {
@@ -25,6 +26,21 @@ module.exports = {
         reject( error );
       });
     });
+  },
+
+  geometry: function(inputAddress) {
+    return new Promise( (resolve, reject ) => {
+      geocode( { address: inputAddress } )
+      .then( response => {
+        resolve( { location: {
+          latitude: response.json.results[0].geometry.location.lat,
+          longitude: response.json.results[0].geometry.location.lng
+        }} );
+      })
+      .catch( error => {
+        reject(error);
+      });
+    })
   },
 
   // other google/map api functions come here
