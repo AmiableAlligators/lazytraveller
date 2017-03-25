@@ -1,6 +1,16 @@
 const geolib = require('geolib');
 
-module.exports = ( start, end, radius, locations ) => {
+module.exports = distanceOptimization = ( start, end, radius = 8000, locations ) => {
+  // START
+  // 1. if start is null, set default as SF (lat: 37.774929, lon: -122.419416 )
+  start = start || {latitude: 37.774929, longitude: -122.419416}
+  // 2. if start is a string, grab the location
+  // TODO: if (typeof start === 'string') { use geo lib to get lat & lon }
+  // 3. if start.place is defined, means lon & lat have been passed in
+  // TODO: start = { latitude: start.coords.lat, longitude: start.coords.lat}
+
+  // TODO: SAME FOR END
+
   // find the center point between start and end
   let center = geolib.getCenter( [ start.location, end.location ] );
   // from the center, use the user input radius or the half of distance as the radius to make a circle
@@ -450,6 +460,6 @@ let end = {
     }
 };
 
-let result = distanceOptimization(start, end, 8000, locations);
+// let result = distanceOptimization(start, end, 8000, locations);
 
 // console.log(result);

@@ -12,23 +12,40 @@ export default class Layout extends React.Component {
       results: null,
       filters: [],
       shortlist: [],
-      discarded: []
+      discarded: [],
+      query: '',
+      budget: '',
+      duration: '',
+      startLocation: {
+        place: ''
+      },
+      endLocation: {
+        place: ''
+      }
     }
     this.fetch = this.fetch.bind(this);
     this.fetchCategories = this.fetchCategories.bind(this);
     this.shortListing = this.shortListing.bind(this);
     this.discard = this.discard.bind(this);
+    this.updateLimits = this.updateLimits.bind(this);
 	}
 
   componentDidMount() {
     this.fetchCategories();
   }
 
-  fetch(query, filters, limits) {
+  fetch(query, filters) {
     let queryWithFilters = {
       query: query,
       filters: filters,
-      limits: limits
+      limits: {
+        budget: this.state.budget,
+        duration: this.state.duration,
+        location: {
+          start: this.state.startLocation,
+          end: this.state.endLocation
+        }
+      }
     }
     $.ajax({
       url: '/query',
@@ -112,7 +129,15 @@ export default class Layout extends React.Component {
         id: this.state.currentQuery.id,
         string: this.state.currentQuery.string
       },
-      completed: false
+      completed: false,
+      limits: {
+        budget: this.state.budget,
+        duration: this.state.duration,
+        location: {
+          start: this.state.startLocation,
+          end: this.state.endLocation
+        }
+      }
     }
     $.ajax({
       url: '/shortlist', 
@@ -128,19 +153,28 @@ export default class Layout extends React.Component {
     });
   }
 
+  updateLimits(limits) {
+    console.log(limits);
+    this.setState(limits);
+  }
+
   // temporarily making the columns beside each other for development
   render () {
     return (
       <div className="ui two column centered grid">
         <div className="ten wide column">
           <SearchView sendHandler={ this.fetch }
+            updateLimits={ this.updateLimits }
+            startLocation={ this.state.startLocation.place }
+            endLocation={ this.state.endLocation.place }
             filters={ this.state.filters } />
           {
             this.state.results &&
             <ShortlistView data={ this.state.results } 
               shortlisted={ this.state.shortlist }
               shortlist={ this.shortListing }
-              discard={ this.discard } />
+              discard={ this.discard } 
+              />
           }
         </div>
         <div className="six wide column">

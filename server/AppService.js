@@ -1,7 +1,7 @@
 const citygrid = require('./api/citygrid');
 const yelp = require('./api/yelp');
 const _ = require('underscore');
-const priceBased = require('./optimizaion/price');
+const priceBased = require('./optimization/price');
 const Activities = require('./db/Activities.js');
 const asyncMap = require('async/map');
 
