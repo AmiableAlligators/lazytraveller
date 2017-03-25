@@ -1,7 +1,8 @@
-
+const travelTime = require('./../api/googleMap').travelTime;
 // for now, I can only assume that we saved some estimated duration data
 // based on activity category(or tag). -> museum: 5 hours
-const timeOptimization = (duration, locations) => {
+const timeOptimization = (duration, transportationMode, locations) => {
+  transportationMode = transportationMode || 'walking';
   // you can go these places
   let result = [];
   // you have no time to go those places
