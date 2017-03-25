@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const AppService = require('./AppService.js')
 const ShortlistResults = require('./db/ShortlistResults.js');
 const Categories = require('./db/Categories.js');
-const distanceOptimization = require('./optimizaion/distance')
+const distanceOptimization = require('./optimization/distance')
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -27,18 +27,41 @@ app.use(express.static(__dirname + '/../client/public'));
  *       id: String,
  *       string: String
  *     },
- *     completed: Boolean
+ *     completed: Boolean,
+ *     limits: Object
  */
 app.post('/shortlist', function(req, res) {
-  ShortlistResults.shortlist(req.body)
-    .then(result => {
-      res.status(201).send(result);
-    })
-    .catch(error => {
-      res.status(404).send(error.message);
-    });
+  console.log(req.body);
   if (req.body.completed) {
+
+    ShortlistResults.find({ 'query.id': req.body.query.id}).exec()
+      .then(results => {
+        console.log(results);
+        // Testing
+        return distanceOptimization(
+          req.body.limits.location.start, 
+          req.body.limits.location.end, null, results
+        );
+      })
+      .then(data => {
+        console.log(data);
+        res.json(data);
+      })
+
     // initiate Optimization
+    // let start = req.body.limits.location.start || null;
+    // let end = req.body.limits.location.end || null;
+    // let radius = req.body.limits.location.radius || null; 
+    // let activities = req.body.activities
+
+  } else {
+    ShortlistResults.shortlist(req.body)
+      .then(result => {
+        res.status(201).send(result);
+      })
+      .catch(error => {
+        res.status(404).send(error.message);
+      });    
   }
 });
 
@@ -59,6 +82,17 @@ app.post('/shortlist', function(req, res) {
  *       }
  *     }
  */
+app.post('/query', function(req, res) {
+  let queryWithFilters = req.body;
+  AppService.find(queryWithFilters)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.send(error);
+    })
+});
+
  app.post('/optimization/distance', function(req, res) {
    let start = req.body.limits.location.start;
    let end = req.body.limits.location.end;
@@ -70,17 +104,6 @@ app.post('/shortlist', function(req, res) {
      res.json(data);
    });
  });
-
-app.post('/query', function(req, res) {
-	let queryWithFilters = req.body;
-  AppService.find(queryWithFilters)
-    .then(data => {
-      res.json(data);
-    })
-    .catch(error => {
-      res.send(error);
-    })
-});
 
 app.get('/categories', function(req, res) {
   let categories = Categories.find().exec();

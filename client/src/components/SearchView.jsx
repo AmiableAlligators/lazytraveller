@@ -7,18 +7,12 @@ export default class SearchView extends React.Component {
     super(props);
 
     this.state = {
-      query: '',
       filters: props.filters,
-      budget: '',
-      duration: '',
-      startLocation: '',
-      endLocation: ''
     }
 
     this.submitHandler = this.submitHandler.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.updateLimits = this.updateLimits.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,18 +27,8 @@ export default class SearchView extends React.Component {
       if (filter.checked) {
         filters.push(filter._id);
       }
-    })
-
-    let limits = {
-      budget: this.state.budget,
-      duration: this.state.duration,
-      location: {
-        start: this.state.startLocation,
-        end: this.state.endLocation
-      }
-    }
-
-    this.props.sendHandler(this.state.query, filters, limits);
+    });
+    this.props.sendHandler(this.state.query, filters);
   }
 
   updateQuery(query) {
@@ -82,10 +66,6 @@ export default class SearchView extends React.Component {
     });
   }
 
-  updateLimits(limits) {
-    this.setState(limits)
-  }
-
   render () {
     return (
       <div className="eight wide column">
@@ -94,8 +74,9 @@ export default class SearchView extends React.Component {
             submitHandler={ this.submitHandler } />
           <FilterList filters={ this.state.filters } 
             updateFilter={ this.updateFilter }
-            updateLimits={ this.updateLimits }
-            limitsStartLocation={ this.state.startLocation.place } />
+            updateLimits={ this.props.updateLimits }
+            limitsStartLocation={ this.props.startLocation }
+            limitsEndLocation={ this.props.endLocation } />
       </div>
     );
   }

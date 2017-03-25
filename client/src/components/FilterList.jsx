@@ -102,6 +102,7 @@ export default class FilterList extends React.Component {
       							<div className="ui right action input fluid mini">
 								  		<input type="text" placeholder="end at..." 
 								  			name="endLocation"
+								  			value={ this.props.limitsEndLocation }
 								  			onChange={ this.setLocation } />
 								  		<button className="ui button mini"
 								  			name="endLocation"
