@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import uuid from 'uuid/v4';
 import SearchView from './SearchView.jsx';
 import ShortlistView from './ShortlistView.jsx';
 import LazyView from './LazyView.jsx';
@@ -10,11 +11,13 @@ export default class Layout extends React.Component {
     this.state = {
       results: null,
       filters: [],
-      shortlist: []
+      shortlist: [],
+      discarded: []
     }
     this.fetch = this.fetch.bind(this);
     this.fetchCategories = this.fetchCategories.bind(this);
     this.shortListing = this.shortListing.bind(this);
+    this.discard = this.discard.bind(this);
 	}
 
   componentDidMount() {
@@ -34,14 +37,12 @@ export default class Layout extends React.Component {
       data: JSON.stringify(queryWithFilters),
       dataType: 'json',
       success: function(data) {
-        // Temporarily assign an ID to the activity
-        // TODO Remove after activities have been saved to db
-        let modifiedData = data.map(activity => {
-          activity.id = Math.random() * 1000;
-          return activity;
-        });
         this.setState({
-          results: modifiedData
+          results: data,
+          currentQuery: {
+            id: uuid(),
+            string: query
+          }
         })
       }.bind(this),
       error: function(err) {
@@ -69,11 +70,29 @@ export default class Layout extends React.Component {
     });
   }
 
-  shortListing(input) {
-    console.log(input);
+  discard(activityId) {
+    let discarded = this.state.discarded;
+    discarded.push(activityId);
+    this.setState({
+      discarded: discarded
+    })
+    this.removeFromResults(activityId);
+  }
+
+  removeFromResults(activityId) {
+    // remove from results, immutable-style
+    let results = this.state.results.filter(result => (
+      result._id !== activityId
+    ));
+    this.setState({
+      results: results
+    });
+  }
+
+  shortListing(activityId) {
     // get activity from results
     let activity = this.state.results.filter(activity => (
-      activity.id === input
+      activity._id === activityId
     ))[0];
     // push activity into shortlist state
     this.setState((prevState) => {
@@ -83,16 +102,30 @@ export default class Layout extends React.Component {
         shortlist: arr
       }
     });
-    // $.ajax({
-    //   url: '/shortlist', 
-    //   method: 'POST',
-    //   headers: { 'Content-type': 'application/json' },
-    //   success: (data) => {
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+
+    this.removeFromResults(activityId);
+    let formData = {
+      user_id: 1,
+      activity_id: activityId,
+      like: true,
+      query: {
+        id: this.state.currentQuery.id,
+        string: this.state.currentQuery.string
+      },
+      completed: false
+    }
+    $.ajax({
+      url: '/shortlist', 
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(formData),
+      success: (data) => {
+
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
 
   // temporarily making the columns beside each other for development
@@ -105,7 +138,9 @@ export default class Layout extends React.Component {
           {
             this.state.results &&
             <ShortlistView data={ this.state.results } 
-              shortlist={ this.shortListing } />
+              shortlisted={ this.state.shortlist }
+              shortlist={ this.shortListing }
+              discard={ this.discard } />
           }
         </div>
         <div className="six wide column">

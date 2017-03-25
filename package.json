@@ -26,6 +26,7 @@
     "react-router": "^4.0.0",
     "request": "^2.81.0",
     "underscore": "^1.8.3",
+    "uuid": "^3.0.1",
     "yelp-fusion": "^1.0.3"
   },
   "devDependencies": {

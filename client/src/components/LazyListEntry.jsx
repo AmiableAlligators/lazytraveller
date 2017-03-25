@@ -1,8 +1,7 @@
 import React from 'react';
 
 const LazyListEntry = ({ activity }) => (
-  <li>
-  	<div className="ui card">
+  	<div className="card" >
 	    <div className="image">
 	      <img src={ activity.image } />
 	    </div>
@@ -17,7 +16,6 @@ const LazyListEntry = ({ activity }) => (
 	      </div>
 	    </div>
 	  </div>
-  </li>
 );
 
 export default LazyListEntry;
