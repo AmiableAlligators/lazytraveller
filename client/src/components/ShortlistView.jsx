@@ -10,7 +10,7 @@ export default class ShortlistView extends React.Component {
     return (
       <div className="eight wide column">
         <h1>ShortList</h1>
-        Shortlisted { this.props.shortlisted.length } activities.
+        Shortlisted { this.props.shortlisted && this.props.shortlisted.length } activities.
         <button onClick={ this.handleClick } >Done shortlisting</button>
         {
           this.props.data &&
