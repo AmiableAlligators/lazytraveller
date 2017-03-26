@@ -5,6 +5,7 @@ import ActivityView from './ActivityView.jsx'
 export default class ShortlistView extends React.Component {
   constructor(props) {
     super(props)
+
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -31,21 +32,26 @@ export default class ShortlistView extends React.Component {
 
   render() {
     return (
-      <div className="eight wide column">
+      <div className="sixteen wide column">
         <h1>ShortList</h1>
         Shortlisted { this.props.shortlisted && this.props.shortlisted.length } activities.
-        <button onClick={ this.handleClick } >Done shortlisting</button>
         {
-          this.props.data &&
-          this.props.data.map(item => (
-            <ActivityView
-              key= { item._id }
-              activity={ item }
-              shortlist={ this.props.shortlist }
-              discard={ this.props.discard } />
-          ))
+          this.props.currentActivity &&
+          <ActivityView
+            key={ this.props.currentActivity._id }
+            activity={ this.props.currentActivity }
+            shortlist={ this.props.shortlist }
+            discard={ this.props.discard } />
         }
       </div>
     )
   }
 }
+
+// this.props.activities.map(item => (
+//             <ActivityView
+//               key= { item._id }
+//               activity={ item }
+//               shortlist={ this.props.shortlist }
+//               discard={ this.props.discard } />
+//           ))

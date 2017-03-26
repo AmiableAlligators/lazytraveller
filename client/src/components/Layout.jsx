@@ -9,7 +9,10 @@ export default class Layout extends React.Component {
 	constructor(props) {
 		super(props);
     this.state = {
+      displaySearch: true,
+      displayLazy: false,
       results: null,
+      currentActivity: '',
       filters: [],
       shortlist: [],
       discarded: [],
@@ -24,10 +27,12 @@ export default class Layout extends React.Component {
       }
     }
     this.fetch = this.fetch.bind(this);
+    this.showNextActivity = this.showNextActivity.bind(this);
     this.fetchCategories = this.fetchCategories.bind(this);
-    this.shortListing = this.shortListing.bind(this);
+    this.shortlist = this.shortlist.bind(this);
     this.discard = this.discard.bind(this);
     this.updateLimits = this.updateLimits.bind(this);
+    this.sendShortlist = this.sendShortlist.bind(this);
 	}
 
   componentDidMount() {
@@ -55,15 +60,25 @@ export default class Layout extends React.Component {
       dataType: 'json',
       success: function(data) {
         this.setState({
-          results: data,
+          results: data.splice(0, 5),
           currentQuery: {
             id: uuid(),
             string: query
           }
         })
+        this.showNextActivity();
       }.bind(this),
       error: function(err) {
         console.log('err', err);
+      }
+    });
+  }
+
+  showNextActivity() {
+    this.setState((prevState) => {
+      let activity = prevState.results.shift();
+      return {
+        currentActivity: activity
       }
     });
   }
@@ -94,6 +109,54 @@ export default class Layout extends React.Component {
       discarded: discarded
     })
     this.removeFromResults(activityId);
+    this.showNextActivity();
+
+    if (this.state.results.length === 0) {
+      let formData = {
+        user_id: 1,
+        // activity_id: activityId,
+        // like: true,
+        query: {
+          id: this.state.currentQuery.id,
+          string: this.state.currentQuery.string
+        },
+        completed: this.state.results.length ? false : true,
+        limits: {
+          budget: this.state.budget,
+          duration: this.state.duration,
+          location: {
+            start: this.state.startLocation,
+            end: this.state.endLocation
+          }
+        }
+      }
+
+      this.sendShortlist(formData, (err, results) => {
+        if (err) { return console.log(err) };
+        if (results.status) {
+          this.setState({
+            displayLazy: true,
+            shortlist: results.activities
+          })
+        } 
+      });
+    }
+  }
+
+  sendShortlist(data, callback) {
+    $.ajax({
+      url: '/shortlist', 
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function(data) {
+        callback(null, data);
+      },
+      error: (err) => {
+        console.log('err', err);
+        callback(err, null);
+      }
+    });
   }
 
   removeFromResults(activityId) {
@@ -106,21 +169,9 @@ export default class Layout extends React.Component {
     });
   }
 
-  shortListing(activityId) {
-    // get activity from results
-    let activity = this.state.results.filter(activity => (
-      activity._id === activityId
-    ))[0];
-    // push activity into shortlist state
-    this.setState((prevState) => {
-      let arr = prevState.shortlist;
-      arr.push(activity);
-      return {
-        shortlist: arr
-      }
-    });
-
+  shortlist(activityId) {
     this.removeFromResults(activityId);
+    this.showNextActivity();
     let formData = {
       user_id: 1,
       activity_id: activityId,
@@ -129,7 +180,7 @@ export default class Layout extends React.Component {
         id: this.state.currentQuery.id,
         string: this.state.currentQuery.string
       },
-      completed: false,
+      completed: this.state.results.length ? false : true,
       limits: {
         budget: this.state.budget,
         duration: this.state.duration,
@@ -139,47 +190,45 @@ export default class Layout extends React.Component {
         }
       }
     }
-    $.ajax({
-      url: '/shortlist', 
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(formData),
-      success: (data) => {
-
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
+    this.sendShortlist(formData, (err, results) => {
+      if (err) { return console.log(err) };
+      if (results.status) {
+        this.setState({
+          displayLazy: true,
+          shortlist: results.activities
+        })
+      } 
     });
   }
 
   updateLimits(limits) {
-    console.log(limits);
     this.setState(limits);
   }
 
-  // temporarily making the columns beside each other for development
   render () {
     return (
-      <div className="ui two column centered grid">
-        <div className="ten wide column">
-          <SearchView sendHandler={ this.fetch }
-            updateLimits={ this.updateLimits }
-            startLocation={ this.state.startLocation.place }
-            endLocation={ this.state.endLocation.place }
-            filters={ this.state.filters } />
+      <div className="ui middle aligned center aligned grid container">
+        <div className="sixteen wide column">
+          {
+            !this.state.results &&
+            <SearchView sendHandler={ this.fetch }
+              updateLimits={ this.updateLimits }
+              startLocation={ this.state.startLocation.place }
+              endLocation={ this.state.endLocation.place }
+              filters={ this.state.filters } />
+          }
           {
             this.state.results &&
-            <ShortlistView data={ this.state.results } 
+            !this.state.displayLazy &&
+            <ShortlistView activities={ this.state.results } 
+              currentActivity={ this.state.currentActivity }
               shortlisted={ this.state.shortlist }
-              shortlist={ this.shortListing }
-              discard={ this.discard } 
-              />
+              shortlist={ this.shortlist }
+              discard={ this.discard } />
           }
-        </div>
-        <div className="six wide column">
           {
             this.state.shortlist &&
+            this.state.displayLazy &&
             <LazyView data={ this.state.shortlist } />
           }
         </div>

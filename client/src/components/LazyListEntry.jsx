@@ -1,8 +1,11 @@
 import React from 'react';
 
-const LazyListEntry = ({ activity }) => (
-  	<div className="card" >
+const LazyListEntry = ({ activity, index }) => (
+  	<div className="card">
 	    <div className="image">
+	    	<a className="ui left corner label">
+	    		<i className="heart icon">{ index }</i>
+	    	</a>
 	      <img src={ activity.image } />
 	    </div>
 	    <div className="content">

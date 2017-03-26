@@ -6,10 +6,11 @@ const LazyList = ({ data }) => {
   	<div className="ui cards scroll" style={{display: '-webkit-box'}}>
 	    {
 	    	data &&
-	    	data.map((item) => (
+	    	data.map((item, index) => (
 	    		<LazyListEntry 
 	    			key={ item._id }
-	    			activity={ item } />
+	    			index={ index + 1 }
+	    			activity={ item._activity } />
 	    	))
 	    }
   	</div>
