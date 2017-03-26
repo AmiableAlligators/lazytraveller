@@ -1,4 +1,4 @@
-// const geolib = require('geolib');
+const geolib = require('geolib');
 
 module.exports = distanceOptimization = ( start, end, radius = 8000, locations ) => {
   // START
@@ -11,23 +11,6 @@ module.exports = distanceOptimization = ( start, end, radius = 8000, locations )
 
   // TODO: SAME FOR END
 
-  // find the center point between start and end
-  let center = geolib.getCenter( [ start.location, end.location ] );
-  // from the center, use the user input radius or the half of distance as the radius to make a circle
-  radius = radius || geolib.getDistance( start.location, end.location ) / 2;
-  // find all activity locations that are inside of the circle
-  // also need to return all out range locations to user
-  let inRangeLocations = [];
-  let outRangeLocations = [];
-  locations.forEach( obj => {
-    if ( geolib.isPointInCircle( obj.location, center, radius )) {
-      inRangeLocations.push( obj );
-    } else {
-      outRangeLocations.push( obj );
-    }
-  });
-
-module.exports = ( start, end, radius, locations ) => {
   // find the center point between start and end
   let center = geolib.getCenter( [ start.location, end.location ] );
   // from the center, use the user input radius or the half of distance as the radius to make a circle
@@ -477,6 +460,6 @@ let end = {
     }
 };
 
-let result = distanceOptimization(start, end, 8000, locations);
+// let result = distanceOptimization(start, end, 8000, locations);
 
-console.log(result);
+// console.log(result);
