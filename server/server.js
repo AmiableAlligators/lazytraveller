@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const AppService = require('./AppService.js')
 const ShortlistResults = require('./db/ShortlistResults.js');
 const Categories = require('./db/Categories.js');
+const Activities = require('./db/Activities.js');
 const distanceOptimization = require('./optimization/distance')
 
 const mongoose = require('mongoose');
@@ -17,52 +18,53 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/public'));
 
-/**
- * Shortlists an Activity.
- * @param  {Object} req.body  contains:
- *     user_id: Number,
- *     activity_id: String,
- *     like: Boolean,
- *     query: {
- *       id: String,
- *       string: String
- *     },
- *     completed: Boolean,
- *     limits: Object
- */
 app.post('/shortlist', function(req, res) {
+  if (req.body.activity_id) {
+    // TODO: Deal with Success or Error callback.
+    var shortlistPromise = ShortlistResults.shortlist(req.body);
+  }
   if (req.body.completed) {
-    // add one last ShortlistResult
-
-    ShortlistResults.find({ 'query.id': req.body.query.id}).exec()
-      .then(results => {
-        console.log(results);
-        // Testing
-        return distanceOptimization(
-          req.body.limits.location.start, 
-          req.body.limits.location.end, null, results
-        );
-      })
-      .then(data => {
-        console.log(data);
-        res.json(data);
-      })
-
+    if (shortlistPromise) {
+      shortlistPromise.then(result => {
+        ShortlistResults.getWithQueryId(req.body.query.id)
+          .then(activities => {
+            console.log(activities);
+            // Testing
+            // return distanceOptimization(
+            //   req.body.limits.location.start, 
+            //   req.body.limits.location.end, null, activities
+            // );
+            // 0-th item is an status object that the shortlisting is complete
+            return res.json({
+              status: { complete: true },
+              activities: activities
+            });
+          })
+      });
+    } else {
+      ShortlistResults.getWithQueryId(req.body.query.id)
+        .then(activities => {
+          // 0-th item is an status object that the shortlisting is complete
+          return res.json({
+            status: { complete: true },
+            activities: activities
+          });
+        })
+    }
+  } else {
+    // if not completed, send response
+    res.status(201).send();
+  }
     // initiate Optimization
     // let start = req.body.limits.location.start || null;
     // let end = req.body.limits.location.end || null;
     // let radius = req.body.limits.location.radius || null; 
     // let activities = req.body.activities
-
-  } else {
-    ShortlistResults.shortlist(req.body)
-      .then(result => {
-        res.status(201).send(result);
-      })
-      .catch(error => {
-        res.status(404).send(error.message);
-      });    
-  }
+    // Testing
+      // return distanceOptimization(
+      //   req.body.limits.location.start, 
+      //   req.body.limits.location.end, null, activities
+      // );
 });
 
 /**
