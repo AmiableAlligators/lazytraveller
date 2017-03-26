@@ -22,7 +22,4 @@ export default class AppRouter extends React.Component {
     );
   }
 }
-          // <Route path="/search" component={ SearchView}/>
-          // <Route path="/short" component={ShortListView}/>
-          // <Route path="/lazy" component={LazyView}/>
 

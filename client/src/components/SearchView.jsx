@@ -68,15 +68,15 @@ export default class SearchView extends React.Component {
 
   render () {
     return (
-      <div className="eight wide column">
-        <h1 style={{'textAlign': 'center'}}>Lazy Traveller</h1>
-          <SearchBar updateQuery={ this.updateQuery }
-            submitHandler={ this.submitHandler } />
-          <FilterList filters={ this.state.filters } 
-            updateFilter={ this.updateFilter }
-            updateLimits={ this.props.updateLimits }
-            limitsStartLocation={ this.props.startLocation }
-            limitsEndLocation={ this.props.endLocation } />
+      <div>
+        <h1 className="lazy">Lazy Traveller</h1>
+        <SearchBar updateQuery={ this.updateQuery }
+          submitHandler={ this.submitHandler } />
+        <FilterList filters={ this.state.filters } 
+          updateFilter={ this.updateFilter }
+          updateLimits={ this.props.updateLimits }
+          limitsStartLocation={ this.props.startLocation }
+          limitsEndLocation={ this.props.endLocation } />
       </div>
     );
   }
