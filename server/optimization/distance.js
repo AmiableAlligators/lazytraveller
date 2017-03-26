@@ -1,15 +1,31 @@
 const geolib = require('geolib');
+const geometry = require('./../api/googleMap').geometry;
 
-module.exports = distanceOptimization = ( start, end, radius = 8000, locations ) => {
+module.exports = ( start, end, radius, locations ) => {
   // START
-  // 1. if start is null, set default as SF (lat: 37.774929, lon: -122.419416 )
-  start = start || {latitude: 37.774929, longitude: -122.419416}
-  // 2. if start is a string, grab the location
-  // TODO: if (typeof start === 'string') { use geo lib to get lat & lon }
-  // 3. if start.place is defined, means lon & lat have been passed in
-  // TODO: start = { latitude: start.coords.lat, longitude: start.coords.lat}
+ // 1. if start is null, set default as SF (lat: 37.774929, lon: -122.419416 )
+  start = start || { location: { latitude: 37.774929, longitude: -122.419416 } };
+ // 2. if start is a string, grab the location
+  if (typeof start === 'string') {
+    geometry( start )
+    .then( res => start = res; )
+    .catch( err => console.error('Failed to get geoinfo for ', start));
+  }
+ // 3. if start.place is defined, means lon & lat have been passed in
+ // TODO: start = { latitude: start.coords.lat, longitude: start.coords.lat}
+  if ( start.place ) {
+    start = { location: { latitude: start.coords.lat, longitude: start.coords.lat }};
+  }
+ // TODO: SAME FOR END
+  if (typeof end === 'string') {
+    geometry( end )
+    .then( res => end = res; )
+    .catch( err => console.error('Failed to get geoinfo for ', end ));
+  }
 
-  // TODO: SAME FOR END
+  if ( end.place ) {
+    end = { location: { latitude: end.coords.lat, longitude: end.coords.lat }};
+  }
 
   // find the center point between start and end
   let center = geolib.getCenter( [ start.location, end.location ] );
