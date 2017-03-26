@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GOOGLE_API_KEY;
+  key: process.env.GOOGLE_API_KEY
 });
 
 const distanceMatrix = Promise.promisify(googleMapsClient.distanceMatrix);
