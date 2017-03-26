@@ -22,7 +22,7 @@ db.categories.insert(
 		{name: "Botanical Gardens", type: "outdoor", associated_tags: { CityGrid: [81], Yelp: ['gardens'] }},
 		{name: "Hot Springs", type: "outdoor", associated_tags: { CityGrid: [93], Yelp: ['hotsprings'] }},
 		{name: "Beaches", type: "outdoor", associated_tags: { CityGrid: [16220], Yelp: ['beaches'] }},
-		{name: "National Parks", type: "outdoor", associated_tags: { CityGrid: [25980], Yelp: ['museums'] }},
+		{name: "National Parks", type: "outdoor", associated_tags: { CityGrid: [25980], Yelp: [] }},
 		{name: "Hiking Trails", type: "outdoor", associated_tags: { CityGrid: [12554], Yelp: ['hiking'] }},
 		{name: "Water Parks", type: "outdoor", associated_tags: { CityGrid: [102], Yelp: ['waterparks'] }},
 	]
@@ -30,5 +30,4 @@ db.categories.insert(
 
 		// {name: "Art Centers", type: "city", associated_tags: { CityGrid: [71], Yelp: ['museums'] }},
 		// {name: "Outdoors", type: "outdoor", associated_tags: { CityGrid: [4115], Yelp: [] }},
-		// {name: "City Activities", type: "city", associated_tags: { CityGrid: [96, 76, 77, 103, 6229, 91, 87] }},
 		// {name: "Attractions", type: "city", associated_tags: { CityGrid: [75], Yelp: [] }}

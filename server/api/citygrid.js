@@ -66,7 +66,7 @@ let formatData = apiResult => {
         latitude: currentLocation.latitude
       },
       phone_number: currentLocation.phone_number,
-      rating: currentLocation.rating,
+      rating: currentLocation.rating/2,
       price: null,
       neighborhood: currentLocation.neighborhood,
       isClosed: null,
