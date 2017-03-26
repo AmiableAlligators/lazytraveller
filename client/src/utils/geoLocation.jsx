@@ -51,7 +51,6 @@ const GeoLocation = {
 					lat: results.features[0].geometry.coordinates[1],
 					lon: results.features[0].geometry.coordinates[0]
 				}
-				console.log(coords);
 				callback(coords);
 			}
 		});
