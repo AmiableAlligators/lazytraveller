@@ -3,7 +3,7 @@ import React from 'react';
 const ActivityView = ({ activity, shortlist, discard }) => (
   <div className="ui card centered">
     <div className="image">
-      <img src={ activity.image } />
+      <img style={{minHeight: '200px'}} src={ activity.image } />
     </div>
     <div className="content">
       <a className="header">{ activity.name }</a>

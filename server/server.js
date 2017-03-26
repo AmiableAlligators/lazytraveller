@@ -8,7 +8,7 @@ const AppService = require('./AppService.js')
 const ShortlistResults = require('./db/ShortlistResults.js');
 const Categories = require('./db/Categories.js');
 const Activities = require('./db/Activities.js');
-const distanceOptimization = require('./optimization/distance')
+const distanceOptimization = require('./optimization/distance.js');
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -20,7 +20,8 @@ app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/shortlist', function(req, res) {
   if (req.body.activity_id) {
-    // TODO: Deal with Success or Error callback.
+    // TODO: Deal with Success or Error callback. 
+    // Using var for non-block-scoped variable
     var shortlistPromise = ShortlistResults.shortlist(req.body);
   }
   if (req.body.completed) {
@@ -28,43 +29,43 @@ app.post('/shortlist', function(req, res) {
       shortlistPromise.then(result => {
         ShortlistResults.getWithQueryId(req.body.query.id)
           .then(activities => {
-            console.log(activities);
-            // Testing
-            // return distanceOptimization(
-            //   req.body.limits.location.start, 
-            //   req.body.limits.location.end, null, activities
-            // );
-            // 0-th item is an status object that the shortlisting is complete
-            return res.json({
-              status: { complete: true },
-              activities: activities
-            });
+            distanceOptimization(
+              activities,
+              req.body.limits.location.start,
+              req.body.limits.location.end,
+              req.body.query
+            )
+              .then(activities => {
+                // 0-th item is an status object that the shortlisting is complete
+                return res.json({
+                  status: { complete: true },
+                  activities: activities
+                });
+              })
           })
       });
     } else {
       ShortlistResults.getWithQueryId(req.body.query.id)
         .then(activities => {
-          // 0-th item is an status object that the shortlisting is complete
-          return res.json({
-            status: { complete: true },
-            activities: activities
-          });
+          distanceOptimization(
+            activities,
+            req.body.limits.location.start,
+            req.body.limits.location.end,
+            req.body.query
+          )
+            .then(activities => {
+              // 0-th item is an status object that the shortlisting is complete
+              return res.json({
+                status: { complete: true },
+                activities: activities
+              });
+            })
         })
     }
   } else {
     // if not completed, send response
     res.status(201).send();
   }
-    // initiate Optimization
-    // let start = req.body.limits.location.start || null;
-    // let end = req.body.limits.location.end || null;
-    // let radius = req.body.limits.location.radius || null; 
-    // let activities = req.body.activities
-    // Testing
-      // return distanceOptimization(
-      //   req.body.limits.location.start, 
-      //   req.body.limits.location.end, null, activities
-      // );
 });
 
 /**
@@ -95,23 +96,11 @@ app.post('/query', function(req, res) {
     })
 });
 
- app.post('/optimization/distance', function(req, res) {
-   let start = req.body.limits.location.start;
-   let end = req.body.limits.location.end;
-   let radius = req.body.limits.location.radius || null; 
-   let activities = req.body.activities
-
-   distanceOptimization(start, end, radius, activities)
-   .then(data => {
-     res.json(data);
-   });
- });
-
 app.get('/categories', function(req, res) {
-  let categories = Categories.find().exec();
-  categories.then(results => {
-    res.json(results);
-  })
+  Categories.find().exec()
+    .then(results => {
+      res.json(results);
+    })
     .catch(error => {
       res.send(error);
     })

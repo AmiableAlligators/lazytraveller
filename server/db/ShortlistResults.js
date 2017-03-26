@@ -8,7 +8,11 @@ var ShortlistResultsSchema = mongoose.Schema({
   like: Boolean,
   query: {
   	id: String,
-  	string: String
+  	string: String,
+  	coords: {
+  		lat: Number,
+  		lon: Number
+  	}
   }
 });
 
