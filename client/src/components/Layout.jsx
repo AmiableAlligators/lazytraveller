@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import uuid from 'uuid/v4';
+import GeoLocation from './../utils/geoLocation.jsx';
 import SearchView from './SearchView.jsx';
 import ShortlistView from './ShortlistView.jsx';
 import LazyView from './LazyView.jsx';
@@ -59,14 +60,17 @@ export default class Layout extends React.Component {
       data: JSON.stringify(queryWithFilters),
       dataType: 'json',
       success: function(data) {
-        this.setState({
-          results: data.splice(0, 5),
-          currentQuery: {
-            id: uuid(),
-            string: query
-          }
+        GeoLocation.search(query, (coords) => {
+          this.setState({
+            results: data.splice(0, 5),
+            currentQuery: {
+              id: uuid(),
+              string: query,
+              coords: coords
+            }
+          })
+          this.showNextActivity();
         })
-        this.showNextActivity();
       }.bind(this),
       error: function(err) {
         console.log('err', err);
@@ -229,7 +233,8 @@ export default class Layout extends React.Component {
           {
             this.state.shortlist &&
             this.state.displayLazy &&
-            <LazyView data={ this.state.shortlist } />
+            <LazyView data={ this.state.shortlist }
+              currentQuery={ this.state.currentQuery } />
           }
         </div>
       </div>

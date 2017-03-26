@@ -41,6 +41,22 @@ const GeoLocation = {
 		);
 	},
 
+	search(place, callback) {
+		place = place.split(' ').join('%20');
+		$.ajax({
+			url: `https://search.mapzen.com/v1/search?api_key=${process.env.MAPZEN_KEY}&text=${place}`,
+			method: 'GET',
+			success: function(results) {
+				let coords = {
+					lat: results.features[0].geometry.coordinates[1],
+					lon: results.features[0].geometry.coordinates[0]
+				}
+				console.log(coords);
+				callback(coords);
+			}
+		});
+	},
+
 	_reverseGeocode(lat, lon, callback) {
 		$.ajax({
       url: `https://search.mapzen.com/v1/reverse?api_key=${process.env.MAPZEN_KEY}&point.lat=${lat}&point.lon=${lon}&size=1&sources=osm`,
