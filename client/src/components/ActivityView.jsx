@@ -10,10 +10,10 @@ const ActivityView = ({ activity, shortlist, discard, photos, showGallery, }) =>
           <div>
             {
               photos &&
-              photos.map((photo, index) => (
+              photos.slice(1).map((photo, index) => (
                 <img style={{height: '80px', 'marginRight': '10px'}} src={ photo.original }
                   key={ index }
-                  onClick={ showGallery.bind(null, index) } />
+                  onClick={ showGallery.bind(null, index + 1) } />
               ))
             }
           </div>

@@ -118,6 +118,7 @@ export default class Layout extends React.Component {
   showNextActivity() {
     this.setState((prevState) => {
       let activity = prevState.results.shift();
+      activity.photos.unshift(activity.image);
       let photos = activity ? this.makeGalleryPhotos(activity.photos) : [];
       return {
         currentActivity: activity,
