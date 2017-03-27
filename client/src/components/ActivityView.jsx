@@ -1,9 +1,24 @@
 import React from 'react';
 
-const ActivityView = ({ activity, shortlist, discard }) => (
+const ActivityView = ({ activity, shortlist, discard, photos, showGallery, }) => (
   <div className="ui card centered">
     <div className="image">
-      <img style={{minHeight: '200px'}} src={ activity.image } />
+      <img style={{minHeight: '180px'}} src={ activity.image } 
+        onClick={ showGallery } />
+        <div style={{textAlign: 'left', padding: '5px 0 0 5px'}}><strong>Photos</strong></div>
+        <div className="scroll" style={{paddingTop: '5px', backgroundColor: 'white', height: '95px', display: '-webkit-box', 'overflowY': 'hidden'}}
+          onClick={ showGallery } >
+          <div>
+            {
+              photos &&
+              photos.map((photo, index) => (
+                <img style={{height: '80px', 'marginRight': '10px'}} src={ photo.original } 
+                  key={ index }
+                  onClick={ showGallery.bind(null, index) } />
+              ))
+            }
+          </div>
+        </div>
     </div>
     <div className="content">
       <a className="header">{ activity.name }</a>

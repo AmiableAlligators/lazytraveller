@@ -4,7 +4,7 @@ import ActivityView from './ActivityView.jsx'
 
 export default class ShortlistView extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -17,8 +17,10 @@ export default class ShortlistView extends React.Component {
           <ActivityView
             key={ this.props.currentActivity._id }
             activity={ this.props.currentActivity }
+            photos={ this.props.photos }
             shortlist={ this.props.shortlist }
-            discard={ this.props.discard } />
+            discard={ this.props.discard }
+            showGallery={ this.props.showGallery } />
         }
       </div>
     )

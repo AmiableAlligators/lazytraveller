@@ -1,5 +1,5 @@
 const geolib = require('geolib');
-const geometry = require('./../api/googleMap').geometry;
+const geometry = require('./../api/googleMaps').geometry;
 
 /**
  * Optimize sequence of visiting activities by distance.
