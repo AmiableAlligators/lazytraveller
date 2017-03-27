@@ -18,7 +18,7 @@ export default class Layout extends React.Component {
       results: null,
       currentActivity: '',
       filters: [],
-      shortlist: [],
+      shortlist: 0,
       discarded: [],
       query: '',
       budget: '',
@@ -222,6 +222,11 @@ export default class Layout extends React.Component {
   }
 
   shortlist(activityId) {
+    let shortlist = this.state.shortlist;
+    shortlist++;
+    this.setState({
+      shortlist: shortlist
+    })
     this.removeFromResults(activityId);
     this.showNextActivity();
     let formData = {
@@ -301,7 +306,6 @@ export default class Layout extends React.Component {
               showGallery={ this.showGallery} />
           }
           {
-            this.state.shortlist &&
             this.state.displayLazy &&
             <LazyView data={ this.state.shortlist }
               startLocation={ this.state.startLocation }
