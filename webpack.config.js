@@ -13,7 +13,7 @@ var config = {
    module : {
     loaders : [
       {
-        test : /\.jsx?/,
+        test : /\.(js|jsx)?/,
         include: SRC_DIR,
         exclude: '/node_modules/',
         loader: 'babel-loader',

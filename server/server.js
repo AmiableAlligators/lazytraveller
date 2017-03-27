@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/../client/public'));
 
 app.post('/shortlist', function(req, res) {
   if (req.body.activity_id) {
-    // TODO: Deal with Success or Error callback. 
+    // TODO: Deal with Success or Error callback.
     // Using var for non-block-scoped variable
     var shortlistPromise = ShortlistResults.shortlist(req.body);
   }
