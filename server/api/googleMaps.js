@@ -46,13 +46,18 @@ module.exports = {
   },
 
   fetchPhotos: function (object) {
-    return Google.places({ 
+    return Google.places({
       query: `${object.name} in ${object.address.city}, ${object.address.state}`
     }).asPromise()
       .then(result => {
-        return Google.place({ 
-          placeid: result.json.results[0].place_id 
-        }).asPromise()
+        // TODO: Need to check if Google.places fn above fails to find a place. Error when searching 'san jose' with no filters
+        if (result.json.results[0] !== undefined) {
+          return Google.place({
+            placeid: result.json.results[0].place_id
+          }).asPromise()
+        } else {
+          throw Error('No such place found on Google.place');
+        }
       })
       .then(result => {
         return new Promise ((resolve, reject) => {
@@ -60,7 +65,7 @@ module.exports = {
           result.json.result.photos &&
           result.json.result.photos.map(function(item) {
             var requestString = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${item.photo_reference}&key=${process.env.GOOGLE_MAPS}`;
-            arrayOfUrls.push(requestString);  
+            arrayOfUrls.push(requestString);
           });
           object.photos = arrayOfUrls;
           resolve(arrayOfUrls);
@@ -71,4 +76,3 @@ module.exports = {
       })
   }
 }
-

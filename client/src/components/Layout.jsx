@@ -10,6 +10,7 @@ import LazyView from './LazyView.jsx';
 export default class Layout extends React.Component {
 	constructor(props) {
 		super(props);
+
     this.state = {
       displaySearch: true,
       displayLazy: false,
@@ -28,7 +29,7 @@ export default class Layout extends React.Component {
       endLocation: {
         place: ''
       },
-      galleryPhotos: [ 
+      galleryPhotos: [
         {
           original: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CoQBdwAAAMjKmzXHygvijg-C6orNqQKHhmdU7l_rtTbgtAtaaJ3NOitRJfNQrnxGCziPzqfg2quXDjJqCwbCliIqn1WjkZT3A33mMzeJ4Fwk7gE8zKc6Qz79YElMPMKUZGUuWw7GrCfN_Jm896jpADgsfVvWUI4vUqZbmCo5DZ-WixfpJgQHEhCOan05-xCyTn3itdnwz_XkGhRo4bArLaI0gcKTtlQddImY2flbgQ&key=AIzaSyBf-gH8u8JBDlSYspZFsrOO6x9iCFLkxjE',
         },
@@ -126,16 +127,18 @@ export default class Layout extends React.Component {
   }
 
   makeGalleryPhotos(photos) {
-    return photos.map(photo => {
-      return {
-        original: photo
-      }
-    });
+    if (photos) {
+      return photos.map(photo => {
+        return {
+          original: photo
+        }
+      });
+    }
   }
 
   fetchCategories() {
     $.ajax({
-      url: '/categories', 
+      url: '/categories',
       method: 'GET',
       success: (data) => {
         data = data.map(filter => {
@@ -189,14 +192,14 @@ export default class Layout extends React.Component {
             displayLazy: true,
             shortlist: results.activities
           })
-        } 
+        }
       });
     }
   }
 
   sendShortlist(data, callback) {
     $.ajax({
-      url: '/shortlist', 
+      url: '/shortlist',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
@@ -249,7 +252,7 @@ export default class Layout extends React.Component {
           displayLazy: true,
           shortlist: results.activities
         })
-      } 
+      }
     });
   }
 
@@ -283,11 +286,11 @@ export default class Layout extends React.Component {
           {
             this.state.results &&
             !this.state.displayLazy &&
-            <ShortlistView activities={ this.state.results } 
+            <ShortlistView activities={ this.state.results }
               currentActivity={ this.state.currentActivity }
               shortlisted={ this.state.shortlist }
               shortlist={ this.shortlist }
-              discard={ this.discard } 
+              discard={ this.discard }
               photos={ this.state.galleryPhotos }
               showGallery={ this.showGallery} />
           }
@@ -300,7 +303,7 @@ export default class Layout extends React.Component {
           {
             this.state.showGallery &&
             <div className="image-gallery-container">
-              <span className="image-gallery-close" 
+              <span className="image-gallery-close"
                 onClick={ this.showGallery }>
                 <i className="remove icon"></i>
               </span>
