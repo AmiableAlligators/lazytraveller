@@ -1,7 +1,7 @@
 import React from 'react';
 import LazyListEntry from './LazyListEntry.jsx'
 
-const LazyList = ({ data }) => {
+const LazyList = ({ data, state, selector }) => {
   return (
   	<div className="ui cards scroll" style={{display: '-webkit-box'}}>
 	    {
@@ -10,7 +10,9 @@ const LazyList = ({ data }) => {
 	    		<LazyListEntry 
 	    			key={ item._id }
 	    			index={ index + 1 }
-	    			activity={ item._activity } />
+	    			activity={ item._activity } 
+            state= { state } 
+            selector={ selector } />
 	    	))
 	    }
   	</div>
