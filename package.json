@@ -8,7 +8,6 @@
     "test": "webpack -d --config webpack.config-test.js && mocha test/output.js",
     "dev": "webpack -d --watch & nodemon server/server.js",
     "build": "webpack -d"
-    // "heroku-postbuild": "webpack -d --config ./webpack.config.js --progress"
   },
   "author": "Christine Dey & company",
   "license": "ISC",
