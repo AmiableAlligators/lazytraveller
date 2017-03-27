@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lazy Traveller</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="css/image-gallery.css">
   <style>
   	.scroll {
 		  white-space: nowrap;
@@ -15,6 +16,27 @@
     .lazy.lazy {
       margin-top: 35px;
       text-align: center;
+    }
+    .image-gallery-container {
+      padding: 25px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .image-gallery-close {
+      position: absolute;
+      right: 45px;
+      top: 45px;
+      font-size: 1.8em;
+      z-index: 10;
+      color: white;
+    }
+    .image-gallery-close:hover {
+      font-size: 2em;
+      cursor: pointer;
     }
   </style>
 </head>
