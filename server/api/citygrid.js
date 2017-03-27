@@ -32,7 +32,7 @@ module.exports = {
       //sends the citygrid api request
     }).then(function(argument){
       return new Promise (function(resolve, reject) {
-        let requestString = `http://api.citygridmedia.com/content/places/v2/search/where?tag=${search.tag}&where=${search.where}&what=places%20to%20visit%20&sort=${search.sort}&format=json&publisher=${process.env.CITYGRID_PUBLISHER}`;
+        let requestString = `${process.env.CITYGRID_PROTOCOL}api.citygridmedia.com/content/places/v2/search/where?tag=${search.tag}&where=${search.where}&what=places%20to%20visit%20&sort=${search.sort}&format=json&publisher=${process.env.CITYGRID_PUBLISHER}`;
         request(requestString, function(error, response) {
           if (error) {
             console.error(error);
