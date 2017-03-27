@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -d --watch",
+    "start": "npm run build && node server/server.js",
     "test": "webpack -d --config webpack.config-test.js && mocha test/output.js",
     "dev": "webpack -d --watch & nodemon server/server.js",
-    "build": "webpack -p"
+    "build": "webpack -d",
+    "heroku-postbuild": "webpack -d --config ./webpack.config.js --progress"
   },
   "author": "Christine Dey & company",
   "license": "ISC",
