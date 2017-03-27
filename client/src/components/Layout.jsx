@@ -127,13 +127,11 @@ export default class Layout extends React.Component {
   }
 
   makeGalleryPhotos(photos) {
-    if (photos) {
-      return photos.map(photo => {
-        return {
-          original: photo
-        }
-      });
-    }
+    return photos.map(photo => {
+      return {
+        original: photo
+      }
+    });
   }
 
   fetchCategories() {
@@ -298,6 +296,8 @@ export default class Layout extends React.Component {
             this.state.shortlist &&
             this.state.displayLazy &&
             <LazyView data={ this.state.shortlist }
+              startLocation={ this.state.startLocation }
+              endLocation={ this.state.endLocation }
               currentQuery={ this.state.currentQuery } />
           }
           {

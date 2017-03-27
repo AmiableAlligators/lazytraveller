@@ -55,7 +55,44 @@ export default class LazyView extends React.Component {
           scale: 6
         })
       })
-    })
+    }) 
+    this.directionRoutes();
+  }
+
+  directionRoutes() {
+    let origin = {
+      lat: this.props.data[0]._activity.location.latitude,
+      lng: this.props.data[0]._activity.location.longitude
+    }
+    let destination = {
+      lat: this.props.data[this.props.data.length-1]._activity.location.latitude,
+      lng: this.props.data[this.props.data.length-1]._activity.location.longitude
+    }
+    let waypoints = [];
+    this.props.data.forEach(point => {
+      waypoints.push({location: {lat: point._activity.location.latitude, lng: point._activity.location.longitude} })
+    });
+
+    let directionsService = new google.maps.DirectionsService();
+
+    let directionsRequest = {
+      origin: this.props.startLocation.place || origin,
+      destination: this.props.endLocation.place || destination,
+      travelMode: 'WALKING',
+      waypoints: waypoints,
+      optimizeWaypoints: true
+    }
+
+    let path = directionsService.route(directionsRequest, function(directionsResult, directionsStatus) { 
+      console.log(directionsResult, directionsStatus)
+
+      let directionsRenderer = new google.maps.DirectionsRenderer({
+        directions: directionsResult,
+        map: this.state.map
+      
+      })
+    }.bind(this))
+
   }
 
   filterData(type) {
