@@ -1,7 +1,8 @@
 import React from 'react';
 
-const LazyListEntry = ({ activity, index }) => (
-  	<div className="card">
+const LazyListEntry = ({ activity, index, state, selector }) => {
+	
+  return(	<div className="card" onClick={ function() { selector(index) } }>
 	    <div className="image">
 	    	<a className="ui left corner label">
 	    		<i className="heart icon">{ index }</i>
@@ -18,7 +19,7 @@ const LazyListEntry = ({ activity, index }) => (
 	        { activity.description }
 	      </div>
 	    </div>
-	  </div>
-);
+	  </div>)
+};
 
 export default LazyListEntry;
