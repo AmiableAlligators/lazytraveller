@@ -62,7 +62,7 @@ export default class Layout extends React.Component {
       success: function(data) {
         GeoLocation.search(query, (coords) => {
           this.setState({
-            results: data.splice(0, 5),
+            results: data,
             currentQuery: {
               id: uuid(),
               string: query,
@@ -122,7 +122,8 @@ export default class Layout extends React.Component {
         // like: true,
         query: {
           id: this.state.currentQuery.id,
-          string: this.state.currentQuery.string
+          string: this.state.currentQuery.string,
+          coords: this.state.currentQuery.coords
         },
         completed: this.state.results.length ? false : true,
         limits: {
@@ -182,7 +183,8 @@ export default class Layout extends React.Component {
       like: true,
       query: {
         id: this.state.currentQuery.id,
-        string: this.state.currentQuery.string
+        string: this.state.currentQuery.string,
+        coords: this.state.currentQuery.coords
       },
       completed: this.state.results.length ? false : true,
       limits: {
