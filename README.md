@@ -1,6 +1,6 @@
 # Lazy Traveller
 
-> 
+>
 
 ## Team
 
@@ -22,15 +22,13 @@
 
 ## Usage
 
-> Some usage instructions
+> http://127.0.0.1:3000
 
 ## Requirements
 
 - Node 6.4.x
 - Redis 2.6.x
 - Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
@@ -46,7 +44,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [https://docs.google.com/spreadsheets/d/1oI8NP4dmc9nIPTiY6R_AW9mnkXLP9l2JgxMJX631izc/edit#gid=0](LINK_TO_DOC)
 
 
 ## Contributing

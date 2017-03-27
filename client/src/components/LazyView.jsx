@@ -36,8 +36,8 @@ export default class LazyView extends React.Component {
 
   initMap() {
    let map = new google.maps.Map(document.getElementById('map'), {
-      center: { 
-        lat: this.props.currentQuery.coords.lat, 
+      center: {
+        lat: this.props.currentQuery.coords.lat,
         lng: this.props.currentQuery.coords.lon
       },
       zoom: 10
@@ -66,9 +66,9 @@ export default class LazyView extends React.Component {
         },
         title: 'Hello world',
       })
-      
+
       let context = this;
-      
+
       marker.addListener('click', function(event) {
         console.log(this);
         console.log(context.state.markerList);
@@ -83,13 +83,13 @@ export default class LazyView extends React.Component {
       })
       markerArray.push(marker);
     })
-    this.setState({ markerList: markerArray }); 
+    this.setState({ markerList: markerArray });
     this.directionRoutes();
   }
 
   selectionHandler(selectionId) {
     if (this.state.selected === '') {
-      this.setState({ selected: selectionId });  
+      this.setState({ selected: selectionId });
     } else {
       this.state.markerList[this.state.selected - 1].setIcon(this.state.initialMarker);
       this.setState({ selected: selectionId });
@@ -121,13 +121,13 @@ export default class LazyView extends React.Component {
       optimizeWaypoints: false
     }
 
-    let path = directionsService.route(directionsRequest, function(directionsResult, directionsStatus) { 
-      console.log(directionsResult, directionsStatus)
+    let path = directionsService.route(directionsRequest, function(directionsResult, directionsStatus) {
+      // console.log(directionsResult, directionsStatus)
 
       let directionsRenderer = new google.maps.DirectionsRenderer({
         directions: directionsResult,
         map: this.state.map
-      
+
       })
     }.bind(this))
 
@@ -146,9 +146,9 @@ export default class LazyView extends React.Component {
         <div className="ui message" style={{height: '450px'}}>
           <div id="map" style={{height: '100%'}}></div>
         </div>
-        <LazyList 
+        <LazyList
           data={ this.props.data }
-          state={ this.state } 
+          state={ this.state }
           selector = { this.selectionHandler }/>
       </div>
     )
