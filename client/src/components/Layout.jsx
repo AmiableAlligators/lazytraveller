@@ -260,13 +260,21 @@ export default class Layout extends React.Component {
 
   showGallery(imageIndex) {
     let isShowing = this.state.showGallery;
+
     this.setState({
       showGallery: !isShowing
     }, () => {
-      if (imageIndex && this._imageGallery) {
-        this._imageGallery.slideToIndex(imageIndex);
+      if ( typeof imageIndex === 'number') {
+        this.slideToIndex(imageIndex);
       }
     });
+
+  }
+
+  slideToIndex(index) {
+    if (this._imageGallery) {
+      this._imageGallery.slideToIndex(index);
+    }
   }
 
   render () {
@@ -307,7 +315,7 @@ export default class Layout extends React.Component {
                 onClick={ this.showGallery }>
                 <i className="remove icon"></i>
               </span>
-              <ImageGallery ref={i => {this._imageGallery = i;} }
+              <ImageGallery ref={ i => { this._imageGallery = i } }
                 items={ this.state.galleryPhotos }
                 showGallery={ this.showGallery }
                 showThumbnails={ false }
