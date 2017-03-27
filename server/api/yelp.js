@@ -53,7 +53,7 @@ let formatData = apiResult => {
       },
       phone_number: currentLocation.phone,
       rating: currentLocation.rating,
-      price: currentLocation.price ? currentLocation.price : 'free', // maybe need to set to null?
+      price: currentLocation.price ? currentLocation.price : 'free', 
       neighborhood: null,
       isClosed: currentLocation.is_closed,
       api_reference: {
