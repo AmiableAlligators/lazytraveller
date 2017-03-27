@@ -24,13 +24,15 @@ app.post('/shortlist', function(req, res) {
     // Using var for non-block-scoped variable
     var shortlistPromise = ShortlistResults.shortlist(req.body);
   }
+  // after the Shortlist selection(all 10), optimize the results
   if (req.body.completed) {
     if (shortlistPromise) {
       shortlistPromise.then(result => {
         ShortlistResults.getWithQueryId(req.body.query.id)
           .then(activities => {
+            // the function returns an array with same acvivities in optimized order
             distanceOptimization(
-              activities,
+              activities, // required input, the rest are optional
               req.body.limits.location.start,
               req.body.limits.location.end,
               req.body.query
