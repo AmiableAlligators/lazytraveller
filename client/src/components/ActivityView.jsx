@@ -37,9 +37,13 @@ const ActivityView = ({ activity, shortlist, discard, photos, showGallery, }) =>
     <div className="extra content">
       <div className="ui two buttons">
         <div className="ui basic red button"
-          onClick={ discard.bind(null, activity._id) }>Dislike</div>
+          onClick={ discard.bind(null, activity._id) }>
+          <i className="thumbs down icon"></i>
+        </div>
         <div className="ui basic green button"
-          onClick={ shortlist.bind(null, activity._id) }>Shortlist</div>
+          onClick={ shortlist.bind(null, activity._id) }>
+          <i className="thumbs up icon"></i>
+        </div>
       </div>
     </div>
   </div>

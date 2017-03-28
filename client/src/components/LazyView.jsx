@@ -21,7 +21,7 @@ export default class LazyView extends React.Component {
         scale: 8,
         fillColor: 'white',
         fillOpacity: 1.0,
-        strokeColor: 'cyan',
+        strokeColor: '#74C7E3',
       }
     }
 
@@ -70,8 +70,6 @@ export default class LazyView extends React.Component {
       let context = this;
 
       marker.addListener('click', function(event) {
-        console.log(this);
-        console.log(context.state.markerList);
         if (context.state.selected === '') {
           context.setState({ selected: this.label.text });
         } else {
@@ -121,8 +119,7 @@ export default class LazyView extends React.Component {
       optimizeWaypoints: false
     }
 
-    let path = directionsService.route(directionsRequest, function(directionsResult, directionsStatus) {
-      // console.log(directionsResult, directionsStatus)
+    let path = directionsService.route(directionsRequest, function(directionsResult, directionsStatus) { 
 
       let directionsRenderer = new google.maps.DirectionsRenderer({
         directions: directionsResult,
@@ -141,8 +138,7 @@ export default class LazyView extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>Lazy View</h2>
+      <div style={{paddingTop: '30px'}}>
         <div className="ui message" style={{height: '450px'}}>
           <div id="map" style={{height: '100%'}}></div>
         </div>
