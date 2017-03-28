@@ -14,7 +14,7 @@ module.exports = {
     return new Promise (function(resolve, reject) {
       
       if (queryWithFilters.filters.length === 0) { 
-        search.tag = '75';
+        search.tag = '75'; //tag id 75 = attractions
         resolve();
       } else {
         Categories.find({ '_id': { $in: queryWithFilters.filters } }, 'associated_tags.CityGrid', function(err, category) {

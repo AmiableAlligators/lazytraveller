@@ -10,6 +10,13 @@ let apis = [
   yelp
 ];
 
+/**
+ * initialFilter takes the API results and filters on the following parameters:
+ * unique (if two APIs return the same activity)
+ * has at least one image
+ * 10 highest rated
+**/
+
 let _initialFilter = (array) => (
   _.chain(array)
   .flatten()

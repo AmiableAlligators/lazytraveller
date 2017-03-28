@@ -10,6 +10,7 @@
 // get our LazyTraveller database
 db = db.getSiblingDB('lazytravellerdb');
 
+//CityGrid uses tag ids (ex: 96), while Yelp uses category names (ex: museums) - both can be found in API documentation
 db.categories.insert(
 	[
 		{name: "Museums", type: "city", associated_tags: { CityGrid: [96], Yelp: ['museums'] }},
@@ -27,7 +28,3 @@ db.categories.insert(
 		{name: "Water Parks", type: "outdoor", associated_tags: { CityGrid: [102], Yelp: ['waterparks'] }},
 	]
 );
-
-		// {name: "Art Centers", type: "city", associated_tags: { CityGrid: [71], Yelp: ['museums'] }},
-		// {name: "Outdoors", type: "outdoor", associated_tags: { CityGrid: [4115], Yelp: [] }},
-		// {name: "Attractions", type: "city", associated_tags: { CityGrid: [75], Yelp: [] }}
