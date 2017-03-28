@@ -128,11 +128,13 @@ export default class Layout extends React.Component {
   }
 
   makeGalleryPhotos(photos) {
-    return photos.map(photo => {
-      return {
-        original: photo
-      }
-    });
+    if (photos) {
+      return photos.map(photo => {
+        return {
+          original: photo
+        }
+      });
+    }
   }
 
   fetchCategories() {
