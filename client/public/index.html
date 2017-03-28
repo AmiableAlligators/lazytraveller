@@ -38,6 +38,24 @@
       font-size: 2em;
       cursor: pointer;
     }
+    .selected {
+      border: 10px solid #74C7E3 !important;
+    }
+
+    .lazyView.ui.cards>.card {
+      width: 180px !important; 
+    }
+    .lazyView {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      -ms-overflow-style: -ms-autohiding-scrollbar !important;
+    }
+    
+    .lazyView.ui.card>.image, 
+    .ui.cards>.card>.image {
+      max-height: 120px;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>

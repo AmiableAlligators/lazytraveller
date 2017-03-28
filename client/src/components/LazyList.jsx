@@ -3,7 +3,7 @@ import LazyListEntry from './LazyListEntry.jsx'
 
 const LazyList = ({ data, state, selector }) => {
   return (
-  	<div className="ui cards scroll" style={{display: '-webkit-box'}}>
+  	<div className="ui cards lazyView" style={{display: '-webkit-box'}}>
 	    {
 	    	data &&
 	    	data.map((item, index) => (

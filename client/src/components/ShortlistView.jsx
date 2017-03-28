@@ -9,8 +9,7 @@ export default class ShortlistView extends React.Component {
 
   render() {
     return (
-      <div className="sixteen wide column">
-        <h1>ShortList</h1>
+      <div className="sixteen wide column" style={{paddingTop: '30px'}}>
         Shortlisted { this.props.shortlisted > 0 ? this.props.shortlisted : '' } activities.
         {
           this.props.currentActivity &&
